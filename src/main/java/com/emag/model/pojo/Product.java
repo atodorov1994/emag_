@@ -12,30 +12,20 @@ import java.time.LocalDateTime;
 @Data
 public class Product {
     @Id
-    @GeneratedValue
-    @Column(name = "product_id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
-    @Column(name = "sub_category_id")
-    private int subCategoryId;
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
     private String brand;
-    @Column
     private String model;
-    @Column
     private double price;
-    @Column
     private String description;
-    @Column
     private int quantity;
-    @Column
-    private int warrantyMnts;
-    @Column
+    private int warrantyMonths;
     private LocalDateTime addedAt;
-    @Column
     private LocalDateTime deletedAt;
-    @Column
-    private String productscol;
-    @Column
+    private double productRating;
     private int discountsId;
 }

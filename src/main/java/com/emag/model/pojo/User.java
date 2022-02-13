@@ -24,26 +24,21 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private long id;
-    @Column(name = "full_name")
-    private String name;
+    private String fullName;
     private String password;
     private String email;
-    @Column(name = "mobile_phone")
-    private String mobile;
-    @Column(name = "is_admin")
+    private String mobilePhone;
     private boolean isAdmin;
-    @Column(name = "creted_at")
     private Timestamp createdAt;
     private String gender;
-    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @OneToOne
     @JsonManagedReference
     @JoinColumn(name = "image_id")
     private UserImage image;
+
     private String nickname;
 
 //    Adressess many to many relationship

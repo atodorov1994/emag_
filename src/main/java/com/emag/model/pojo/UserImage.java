@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class UserImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
     private int id;
     private String url;
     @OneToOne(mappedBy = "image")

@@ -11,11 +11,12 @@ Content-Type: application/json
  }
 
 
+
 ###
 GET localhost:9999/users
 
 ###
- GET localhost:9999/users/2
+ GET localhost:9999/users/1
 
 ###
 
