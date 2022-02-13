@@ -1,26 +1,29 @@
 package com.emag.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
-@Table(name = "users_images")
-@Setter
-@Getter
-@NoArgsConstructor
-public class UserImage {
+@Data
+@Table(name = "addresses")
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
+    @Column(name = "address_id")
     private int id;
-    private String url;
-    @OneToOne(mappedBy = "image")
+    private String address;
+    private String description;
+    @ManyToMany(mappedBy = "addresses")
     @JsonBackReference
-    private User user;
+    private List<User> users;
+
+
+
+
+
 }

@@ -5,6 +5,8 @@ import com.emag.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -14,6 +16,7 @@ public class UserController {
 
     @PostMapping("/users")
     public User register(@RequestBody User u){
+        u.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         userRepository.save(u);
         return u;
     }

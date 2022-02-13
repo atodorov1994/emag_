@@ -1,4 +1,22 @@
- GET localhost:9999/users
+POST localhost:9999/users
+Content-Type: application/json
+
+ {
+ "name" : "Mihail Alexandrov" ,
+ "password" : "abcds" ,
+ "mobile" : "0885353535" ,
+ "email" : "misho@abv.bg" ,
+ "gender" : "male" ,
+ "isAdmin" : false
+ }
+
+
+###
+GET localhost:9999/users
 
 ###
  GET localhost:9999/users/2
+
+###
+
+

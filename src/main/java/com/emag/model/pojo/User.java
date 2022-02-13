@@ -11,15 +11,16 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.awt.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
+@Component
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,25 +28,33 @@ public class User {
     private long id;
     @Column(name = "full_name")
     private String name;
-    @Column
     private String password;
-    @Column
     private String email;
     @Column(name = "mobile_phone")
     private String mobile;
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "creted_at")
-    private LocalDateTime createdAt;
-    @Column
+    private Timestamp createdAt;
     private String gender;
     @Column(name = "birth_date")
     private LocalDate birthDate;
+
     @OneToOne
     @JsonManagedReference
     @JoinColumn(name = "image_id")
     private UserImage image;
-    @Column
     private String nickname;
+
+//    Adressess many to many relationship
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(
+            name="users_addresses",
+            joinColumns = {@JoinColumn(name="user_id")},
+            inverseJoinColumns = {@JoinColumn(name="address_id")}
+    )
+    private List<Address> addresses;
+
 
 }
