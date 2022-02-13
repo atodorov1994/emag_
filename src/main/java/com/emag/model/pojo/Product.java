@@ -1,38 +1,31 @@
 package com.emag.model.pojo;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
+@Component
 @Entity
 @Table(name = "products")
 @Data
 public class Product {
     @Id
-    @GeneratedValue
-    private int id;
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
-    @Column
-    private int subCategoryId;
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
     private String brand;
-    @Column
     private String model;
-    @Column
     private double price;
-    @Column
     private String description;
-    @Column
     private int quantity;
-    @Column
-    private int warrantyMnts;
-    @Column
+    private int warrantyMonths;
     private LocalDateTime addedAt;
-    @Column
     private LocalDateTime deletedAt;
-    @Column
-    private String productscol;
-    @Column
+    private double productRating;
     private int discountsId;
 }
