@@ -2,14 +2,6 @@ POST localhost:9999/users
 Content-Type: application/json
 
 {
-  "name" : "Bat Sandio",
-  "password" : "batSandio123",
-  "email" : "batSandio123@mail.bg",
-  "mobile" : "0885363633",
-  "createdAt" : null ,
-  "isAdmin" : false
+  "username" : "Bat Sandio",
+  "password" : "batSandio123"
 }
-
-###
-
-GET localhost:9999/users
