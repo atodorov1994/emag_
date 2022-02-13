@@ -1,12 +1,9 @@
 package com.emag.controller;
 
-import com.emag.model.User;
-import com.emag.model.UserRepository;
+import com.emag.model.pojo.User;
+import com.emag.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,6 +21,11 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getAll(){
         return userRepository.findAll();
+    }
+
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
 

@@ -1,4 +1,4 @@
-package com.emag.model;
+package com.emag.model.pojo;
 
 import lombok.Data;
 

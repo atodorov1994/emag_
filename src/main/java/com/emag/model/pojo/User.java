@@ -1,11 +1,13 @@
-package com.emag.model;
+package com.emag.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.awt.*;
@@ -20,31 +22,29 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private long id;
-    @Column
-    @NotNull
+    @Column(name = "full_name")
     private String name;
     @Column
-    @NotNull
     private String password;
     @Column
-    @NotNull
     private String email;
-    @Column
-    @NotNull
+    @Column(name = "mobile_phone")
     private String mobile;
-    @Column
-    @NotNull
+    @Column(name = "is_admin")
     private boolean isAdmin;
-    @Column
+    @Column(name = "creted_at")
     private LocalDateTime createdAt;
     @Column
     private String gender;
-    @Column
+    @Column(name = "birth_date")
     private LocalDate birthDate;
-//    @OneToMany(mappedBy = "users_images")
-//    private Set<Integer> imgId;
+    @OneToOne
+    @JsonManagedReference
+    @JoinColumn(name = "image_id")
+    private UserImage image;
     @Column
     private String nickname;
 
