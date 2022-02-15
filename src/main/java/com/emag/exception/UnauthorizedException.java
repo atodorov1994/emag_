@@ -1,4 +1,4 @@
-package com.emag.exceptions;
+package com.emag.exception;
 
 public class UnauthorizedException extends RuntimeException{
     public UnauthorizedException(String message){

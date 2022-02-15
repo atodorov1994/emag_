@@ -1,4 +1,4 @@
-package com.emag.exceptions;
+package com.emag.exception;
 
 public class MethodNotFoundException extends RuntimeException{
     public MethodNotFoundException(String message){
