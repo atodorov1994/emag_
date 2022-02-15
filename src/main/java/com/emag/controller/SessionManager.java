@@ -1,6 +1,8 @@
 package com.emag.controller;
 
 import com.emag.exception.AuthenticationException;
+import com.emag.exception.BadRequestException;
+import com.emag.model.pojo.User;
 import com.emag.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +18,39 @@ public class SessionManager {
     private UserRepository userRepository;
 
     public void isLoggedVerification(HttpSession session) {
-        if (session.getAttribute(LOGGED_USER_ID) == null ){
-            throw new AuthenticationException("Please log in!");
+        if (session.getAttribute(LOGGED_USER_ID) != null ){
+            throw new AuthenticationException("You are already logged in!");
         }
+    }
+
+    public void loginUser(HttpSession session, long id) {
+        session.setAttribute(LOGGED_USER_ID , id);
+    }
+
+    public void logoutUser(HttpSession session) {
+        if (session.getAttribute(LOGGED_USER_ID) == null){
+            throw new BadRequestException("You have to be logged in to logout!");
+        }
+        session.invalidate();
+    }
+
+    public boolean userHasPrivileges(HttpSession session, long id) {
+        User user = getLoggedUser(session);
+        if (user.isAdmin()){
+            return true;
+        }
+        return id == user.getId();
+    }
+
+    private User getLoggedUser(HttpSession session) {
+        if (session.getAttribute(LOGGED_USER_ID) == null) {
+            throw new AuthenticationException("You have to be logged in!");
+        }
+        long userId = (long) session.getAttribute(LOGGED_USER_ID);
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null){
+            throw new BadRequestException("The user does not exist!");
+        }
+        return user;
     }
 }

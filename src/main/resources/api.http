@@ -1,24 +1,44 @@
 
-### REGISTER ###
+### REGISTER 3###
 POST localhost:9999/users
 Content-Type: application/json
 
  {
- "fullName" : "Mihail Alexandrov" ,
+ "fullName" : "Mihail Shishkov" ,
  "password" : "abcdsA1526!" ,
  "confirmPassword" : "abcdsA1526!" ,
- "email" : "misho@abv.bg" ,
- "isAdmin" : false
+ "email" : "misho_shisho@abv.bg" ,
+ "isAdmin" : true
  }
 
+### REGISTER 4###
+POST localhost:9999/users
+Content-Type: application/json
+
+{
+  "fullName" : "Ivan Aleksiev" ,
+  "password" : "abcdsA1526!" ,
+  "confirmPassword" : "abcdsA1526!" ,
+  "email" : "ivan_debelan@abv.bg" ,
+  "isAdmin" : false
+}
 
 
-###
-GET localhost:9999/users
+### GET BY ID ###
+ GET localhost:9999/users/4
 
-###
- GET localhost:9999/users/1
+### LOGIN ###
+ POST localhost:9999/users/login
+Content-Type: application/json
 
-###
+{
+  "email" : "ivan_debelan@abv.bg" ,
+  "password" : "abcdsA1526!"
+}
+
+### LOGOUT ###
+ POST localhost:9999/users/logout
+
+
 
 
