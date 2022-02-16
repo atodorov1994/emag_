@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,8 @@ public class User {
     private String password;
     private String email;
     private String mobilePhone;
+    @Column(name = "is_admin" , nullable = false , columnDefinition = "TINYINT(1)")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isAdmin;
     private Timestamp createdAt;
     private String gender;

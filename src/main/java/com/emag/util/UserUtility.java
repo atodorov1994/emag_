@@ -1,7 +1,13 @@
 package com.emag.util;
 
 import com.emag.exception.BadRequestException;
+import com.emag.model.dto.AddressDTO;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
+import com.emag.model.pojo.Address;
+import com.emag.model.pojo.User;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class UserUtility {
 
@@ -18,8 +24,8 @@ public class UserUtility {
         return result;
     }
 
-    public static boolean passwordsMatch(RegisterRequestUserDTO u) {
-        return u.getPassword().equals(u.getConfirmPassword());
+    public static boolean passwordsMatch(String password1 , String password2) {
+        return password1.equals(password2);
     }
 
     public static boolean isValidName(String name) {
@@ -71,5 +77,52 @@ public class UserUtility {
             }
         }
         return result;
+    }
+
+    public static Address validateAddress(AddressDTO addressDTO) {
+        Address addressPOJO = new Address();
+        String address = addressDTO.getAddress();
+        if (address != null){
+            addressPOJO.setAddress(address);
+        }
+        else {
+            throw new BadRequestException("Address field is mandatory!");
+        }
+        String addressDescription = addressDTO.getDescription();
+        if (addressDescription != null){
+            addressPOJO.setDescription(addressDescription);
+        }
+        return addressPOJO;
+    }
+
+    public static boolean isValidMobilePhone(String mobilePhone) {
+        mobilePhone = mobilePhone.trim();
+        if (mobilePhone.length() == 10){
+            if (!mobilePhone.startsWith("08") && !mobilePhone.matches("^[0-9]*$")){
+                return false;
+            }
+            return true;
+        }
+        else if (mobilePhone.length() == 13)   {
+            if (!mobilePhone.startsWith("+3598") && mobilePhone.substring(1 , 13).matches("^[0-9]*$")){
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isValidBirthDate(LocalDate birthDate) {
+        return birthDate.isBefore(LocalDate.now().minusYears(10)) && birthDate.isAfter(LocalDate.now().minusYears(100));
+    }
+
+    public static boolean adressExists(Address address, User user) {
+        List<Address> addresses = user.getAddresses();
+        for (Address addr : addresses) {
+            if (addr.getAddress().equals(address.getAddress())){
+                return true;
+            }
+        }
+        return false;
     }
 }

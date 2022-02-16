@@ -66,6 +66,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         dto.setMessage(e.getMessage());
         dto.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         dto.setTime(LocalDateTime.now());
+        e.printStackTrace();
         return dto;
     }
 }

@@ -42,6 +42,11 @@ public class SessionManager {
         return id == user.getId();
     }
 
+    public boolean userHasPrivileges(HttpSession session) {
+        User user = getLoggedUser(session);
+        return user.isAdmin();
+    }
+
     private User getLoggedUser(HttpSession session) {
         if (session.getAttribute(LOGGED_USER_ID) == null) {
             throw new AuthenticationException("You have to be logged in!");
