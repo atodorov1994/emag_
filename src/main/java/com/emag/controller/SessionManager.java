@@ -54,7 +54,7 @@ public class SessionManager {
     private User getLoggedUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         String remoteAddress = request.getRemoteAddr();
-        if (!remoteAddress.equals(LOGGED_USER_REMOTE_ADDRESS)){
+        if (!remoteAddress.equals(session.getAttribute(LOGGED_USER_REMOTE_ADDRESS))){
             session.invalidate();
             throw new AuthenticationException("IP mismatch!");
         }
