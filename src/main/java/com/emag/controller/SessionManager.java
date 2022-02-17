@@ -52,10 +52,7 @@ public class SessionManager {
             throw new AuthenticationException("You have to be logged in!");
         }
         long userId = (long) session.getAttribute(LOGGED_USER_ID);
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null){
-            throw new BadRequestException("The user does not exist!");
-        }
-        return user;
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("The user does not exist!"));
     }
 }

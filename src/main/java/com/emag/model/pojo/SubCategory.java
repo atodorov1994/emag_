@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
@@ -17,6 +18,10 @@ public class SubCategory {
     private long id;
     private String subcategoryName;
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinTable(name = "category")
+    @JoinColumn(name = "id")
     private Category category;
+    @OneToMany(mappedBy = "subCategory")
+    List<Product> products;
+
 }

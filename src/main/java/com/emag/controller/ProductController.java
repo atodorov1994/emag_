@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @PostMapping
+    @PostMapping("/products")
     public ResponseEntity<Product> addProduct(@RequestBody Product p , HttpSession session){
         if(!sessionManager.userHasPrivileges(session)){
             throw new UnauthorizedException("Not admin!");

@@ -45,7 +45,7 @@ public abstract class AbstractService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public  Product addProduct(Product p){
+    public Product addProduct(Product p){
 // TODO
         return null;
 
