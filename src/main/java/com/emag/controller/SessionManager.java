@@ -51,9 +51,17 @@ public class SessionManager {
         return user.isAdmin();
     }
 
-    private User getLoggedUser(HttpServletRequest request) {
+    public User getLoggedUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        validateSession(request);
+        long userId = (long) session.getAttribute(LOGGED_USER_ID);
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new BadRequestException("The user does not exist!"));
+    }
+
+    public void validateSession (HttpServletRequest request){
         String remoteAddress = request.getRemoteAddr();
+        HttpSession session = request.getSession();
         if (!remoteAddress.equals(session.getAttribute(LOGGED_USER_REMOTE_ADDRESS))){
             session.invalidate();
             throw new AuthenticationException("IP mismatch!");
@@ -61,8 +69,5 @@ public class SessionManager {
         if (session.getAttribute(LOGGED_USER_ID) == null) {
             throw new AuthenticationException("You have to be logged in!");
         }
-        long userId = (long) session.getAttribute(LOGGED_USER_ID);
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new BadRequestException("The user does not exist!"));
     }
 }

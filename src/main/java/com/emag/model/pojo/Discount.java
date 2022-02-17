@@ -1,5 +1,6 @@
 package com.emag.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,9 @@ public class Discount {
     private int discountPercent;
     private Timestamp startDate;
     private Timestamp expireDate;
+
     @OneToMany(mappedBy = "discount")
+    @JsonBackReference
     List<Product> products;
 
 }

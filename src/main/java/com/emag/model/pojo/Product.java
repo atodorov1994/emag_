@@ -1,6 +1,8 @@
 package com.emag.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "sub_category_id" )
+    @JsonManagedReference
     private SubCategory subCategory;
 
     private String brand;
@@ -35,7 +38,8 @@ public class Product {
     private double productRating;
 
     @ManyToOne
-    @JoinColumn(name = "_discounts_id")
+    @JsonManagedReference
+    @JoinColumn(name = "discounts_id")
     private Discount discount;
 
     @ManyToMany(mappedBy = "likedProducts")
@@ -43,6 +47,7 @@ public class Product {
     private List<User> usersLikedThisProduct;
 
     @OneToMany(mappedBy = "product")
+    @JsonBackReference
     private List<Review> reviews;
 
 

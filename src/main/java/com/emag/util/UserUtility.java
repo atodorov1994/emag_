@@ -5,11 +5,12 @@ import com.emag.model.dto.AddressDTO;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
 import com.emag.model.pojo.Address;
 import com.emag.model.pojo.User;
+import com.emag.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class UserUtility {
+public class UserUtility  {
 
     public static boolean isValidPass(String password) {
         if (password == null){

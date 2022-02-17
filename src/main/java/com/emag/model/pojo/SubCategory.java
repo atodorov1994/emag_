@@ -1,6 +1,7 @@
 package com.emag.model.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class SubCategory {
     private Category category;
 
     @OneToMany(mappedBy = "subCategory")
+    @JsonBackReference
     List<Product> products;
 
 }
