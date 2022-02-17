@@ -2,17 +2,16 @@ package com.emag.controller;
 
 
 import com.emag.exception.UnauthorizedException;
-import com.emag.model.dto.EditCategoryDTO;
+import com.emag.model.dto.category.CategoryWithoutIdDTO;
+import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.pojo.Category;
 import com.emag.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class CategoryController {
@@ -37,5 +36,18 @@ public class CategoryController {
             throw new UnauthorizedException("No permission!");
         }
         return ResponseEntity.ok(categoryService.editCategory(c));
+    }
+
+    @GetMapping("/categories")
+    public List<CategoryWithoutIdDTO> getAllCategories(){
+        return categoryService.getAllCategories();
+    }
+
+    @DeleteMapping("/categories")
+    public CategoryWithoutIdDTO deleteCategory(@RequestBody CategoryWithoutIdDTO categoryWithoutId, HttpSession session){
+        if (!sessionManager.userHasPrivileges(session)){
+            throw new UnauthorizedException("No permission!");
+        }
+        return categoryService.deleteCategory(categoryWithoutId);
     }
 }

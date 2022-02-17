@@ -1,4 +1,4 @@
-package com.emag.model.dto;
+package com.emag.model.dto.category;
 
 import lombok.Data;
 

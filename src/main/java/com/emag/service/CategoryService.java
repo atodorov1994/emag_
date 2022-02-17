@@ -2,10 +2,13 @@ package com.emag.service;
 
 
 import com.emag.exception.BadRequestException;
-import com.emag.model.dto.EditCategoryDTO;
+import com.emag.model.dto.category.CategoryWithoutIdDTO;
+import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.pojo.Category;
-import com.emag.model.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CategoryService extends AbstractService {
@@ -38,5 +41,22 @@ public class CategoryService extends AbstractService {
         Category category = categoryRepository.findByCategoryName(oldName);
         category.setCategoryName(newName);
         return categoryRepository.save(category);
+    }
+
+    public List<CategoryWithoutIdDTO> getAllCategories() {
+        List<CategoryWithoutIdDTO> categoriesWithoutId = new ArrayList<>();
+        List<Category> categories = categoryRepository.findAll();
+        categories.forEach(category -> categoriesWithoutId.add(modelMapper.map(category, CategoryWithoutIdDTO.class)));
+        return categoriesWithoutId;
+    }
+
+    public CategoryWithoutIdDTO deleteCategory(CategoryWithoutIdDTO categoryWithoutId) {
+        String categoryName = categoryWithoutId.getName();
+        if (categoryRepository.findByCategoryName(categoryName) == null){
+            throw new BadRequestException("No such category!");
+        }
+        Category category = categoryRepository.findByCategoryName(categoryName);
+        categoryRepository.delete(category);
+        return categoryWithoutId;
     }
 }
