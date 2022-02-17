@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -23,16 +24,16 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/categories")
-    public ResponseEntity<Category> addCategory (@RequestBody Category c, HttpSession session){
-        if (!sessionManager.userHasPrivileges(session)){
+    public ResponseEntity<Category> addCategory (@RequestBody Category c, HttpServletRequest request){
+        if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }
         return ResponseEntity.ok(categoryService.addCategory(c));
     }
 
     @PutMapping("/categories")
-    public ResponseEntity<Category> editCategory (@RequestBody EditCategoryDTO c, HttpSession session){
-        if (!sessionManager.userHasPrivileges(session)){
+    public ResponseEntity<Category> editCategory (@RequestBody EditCategoryDTO c, HttpServletRequest request){
+        if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }
         return ResponseEntity.ok(categoryService.editCategory(c));
@@ -44,8 +45,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories")
-    public CategoryWithoutIdDTO deleteCategory(@RequestBody CategoryWithoutIdDTO categoryWithoutId, HttpSession session){
-        if (!sessionManager.userHasPrivileges(session)){
+    public CategoryWithoutIdDTO deleteCategory(@RequestBody CategoryWithoutIdDTO categoryWithoutId, HttpServletRequest request){
+        if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }
         return categoryService.deleteCategory(categoryWithoutId);

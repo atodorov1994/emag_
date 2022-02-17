@@ -7,12 +7,14 @@ import com.emag.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Component
 public class SessionManager {
 
     private static final String LOGGED_USER_ID = "logged_user_id";
+    private static final String LOGGED_USER_REMOTE_ADDRESS = "logged_user_remote_address";
 
     @Autowired
     private UserRepository userRepository;
@@ -23,7 +25,9 @@ public class SessionManager {
         }
     }
 
-    public void loginUser(HttpSession session, long id) {
+    public void loginUser(HttpServletRequest request, long id) {
+        HttpSession session = request.getSession();
+        session.setAttribute(LOGGED_USER_REMOTE_ADDRESS, request.getRemoteAddr());
         session.setAttribute(LOGGED_USER_ID , id);
     }
 
@@ -34,20 +38,26 @@ public class SessionManager {
         session.invalidate();
     }
 
-    public boolean userHasPrivileges(HttpSession session, long id) {
-        User user = getLoggedUser(session);
+    public boolean userHasPrivileges(HttpServletRequest request, long id) {
+        User user = getLoggedUser(request);
         if (user.isAdmin()){
             return true;
         }
         return id == user.getId();
     }
 
-    public boolean userHasPrivileges(HttpSession session) {
-        User user = getLoggedUser(session);
+    public boolean userHasPrivileges(HttpServletRequest request) {
+        User user = getLoggedUser(request);
         return user.isAdmin();
     }
 
-    private User getLoggedUser(HttpSession session) {
+    private User getLoggedUser(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        String remoteAddress = request.getRemoteAddr();
+        if (!remoteAddress.equals(LOGGED_USER_REMOTE_ADDRESS)){
+            session.invalidate();
+            throw new AuthenticationException("IP mismatch!");
+        }
         if (session.getAttribute(LOGGED_USER_ID) == null) {
             throw new AuthenticationException("You have to be logged in!");
         }

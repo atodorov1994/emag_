@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -25,8 +26,8 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping
-    public ResponseEntity<AddProductDTO> addProduct(@RequestBody AddProductDTO p , HttpSession session){
-        if(!sessionManager.userHasPrivileges(session)){
+    public ResponseEntity<AddProductDTO> addProduct(@RequestBody AddProductDTO p , HttpServletRequest request){
+        if(!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("Not admin!");
         }
         return ResponseEntity.ok(productService.addProduct(p));

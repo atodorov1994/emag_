@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -31,9 +32,9 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public ResponseEntity<UserWithoutPasswordDTO> login(@RequestBody @Valid LoginRequestUserDTO dto , HttpSession session){
+    public ResponseEntity<UserWithoutPasswordDTO> login(@RequestBody @Valid LoginRequestUserDTO dto , HttpServletRequest request){
         UserWithoutPasswordDTO user = userService.login(dto);
-        sessionManager.loginUser(session , user.getId());
+        sessionManager.loginUser(request , user.getId());
         return ResponseEntity.ok(user);
     }
 
@@ -44,8 +45,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserWithoutPasswordDTO getUserById(@PathVariable long id, HttpSession session) {
-        if (!sessionManager.userHasPrivileges(session, id)) {
+    public UserWithoutPasswordDTO getUserById(@PathVariable long id, HttpServletRequest request) {
+        if (!sessionManager.userHasPrivileges(request, id)) {
             throw new UnauthorizedException("No privileges!");
         }
         return userService.findById(id);
@@ -54,8 +55,8 @@ public class UserController {
 
     @Transactional
     @PutMapping("/users/{id}")
-    public UserWithoutPasswordDTO editUserData(@PathVariable long id, @RequestBody @Valid EditUserRequestDTO dto, HttpSession session){
-        if (!sessionManager.userHasPrivileges(session , id)){
+    public UserWithoutPasswordDTO editUserData(@PathVariable long id, @RequestBody @Valid EditUserRequestDTO dto, HttpServletRequest request){
+        if (!sessionManager.userHasPrivileges(request , id)){
             throw new UnauthorizedException("No privileges!");
         }
         return userService.editUserData(id,dto);
@@ -63,8 +64,8 @@ public class UserController {
 
     @Transactional
     @PutMapping("/users/{id}/pass")
-    public UserWithoutPasswordDTO editUserPassword(@PathVariable long id, @RequestBody @Valid EditPasswordRequestDTO dto, HttpSession session){
-        if (!sessionManager.userHasPrivileges(session , id)){
+    public UserWithoutPasswordDTO editUserPassword(@PathVariable long id, @RequestBody @Valid EditPasswordRequestDTO dto, HttpServletRequest request){
+        if (!sessionManager.userHasPrivileges(request , id)){
             throw new UnauthorizedException("No privileges!");
         }
         return userService.editUserPassword(id,dto);
