@@ -14,3 +14,18 @@ Content-Type: application/json
   "oldName": "TV",
   "newName": "Television"
 }
+<<<<<<< HEAD
+=======
+
+### find all categories ###
+GET localhost:9999/categories
+Content-Type: application/json
+
+### delete category ###
+DELETE localhost:9999/categories
+Content-Type: application/json
+
+{
+"name": "Gamingx"
+}
+>>>>>>> 7e7f0f6b99f239ff83be5d3c9fae6eca4a11497d
