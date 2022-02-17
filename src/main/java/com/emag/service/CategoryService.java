@@ -2,11 +2,10 @@ package com.emag.service;
 
 
 import com.emag.exception.BadRequestException;
-import com.emag.model.dto.category.CategoryWithoutIdDTO;
-import com.emag.model.dto.category.EditCategoryDTO;
+import com.emag.model.dto.EditCategoryDTO;
 import com.emag.model.pojo.Category;
 import org.springframework.stereotype.Service;
-
+import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import java.util.ArrayList;
 import java.util.List;
 

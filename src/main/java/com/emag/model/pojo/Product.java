@@ -1,10 +1,11 @@
 package com.emag.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import java.util.List;
 
 @Component
 @Entity
@@ -18,17 +19,35 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+
     @ManyToOne
-    @JoinColumn(name = "sub_category_id")
+    @JoinColumn(name = "sub_category_id" )
     private SubCategory subCategory;
+
     private String brand;
     private String model;
     private double price;
     private String description;
     private int quantity;
     private int warrantyMonths;
-    private LocalDateTime addedAt;
-    private LocalDateTime deletedAt;
+    private Timestamp addedAt;
+    private Timestamp deletedAt;
     private double productRating;
-    private int discountsId;
+
+    @ManyToOne
+    @JoinColumn(name = "_discounts_id")
+    private Discount discount;
+
+    @ManyToMany(mappedBy = "likedProducts")
+    @JsonBackReference
+    private List<User> usersLikedThisProduct;
+
+    @OneToMany(mappedBy = "product")
+    private List<Review> reviews;
+
+
+
+
+
+
 }

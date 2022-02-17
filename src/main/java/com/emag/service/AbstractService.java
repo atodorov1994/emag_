@@ -14,9 +14,9 @@ public abstract class AbstractService {
     @Autowired
     protected AddressRepository addressRepository;
 
-//    @Autowired
-//    protected ProductRepository productRepository;
-//
+    @Autowired
+    protected ProductRepository productRepository;
+
     @Autowired
     protected CategoryRepository categoryRepository;
 //

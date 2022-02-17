@@ -55,5 +55,19 @@ public class User {
     )
     private List<Address> addresses;
 
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(
+            name = "users_like_products" ,
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn (name = "product_id")}
+    )
+    private List<Product> likedProducts;
+
+    @OneToMany(mappedBy = "reviewer")
+    private List<Review> reviews;
+
+
+
 
 }

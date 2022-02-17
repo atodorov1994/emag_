@@ -2,16 +2,18 @@ package com.emag.controller;
 
 
 import com.emag.exception.UnauthorizedException;
+import com.emag.model.dto.EditCategoryDTO;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
-import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.pojo.Category;
 import com.emag.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController

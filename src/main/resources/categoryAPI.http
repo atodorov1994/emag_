@@ -23,6 +23,4 @@ Content-Type: application/json
 DELETE localhost:9999/categories
 Content-Type: application/json
 
-{
-"name": "Gaming"
-}
+

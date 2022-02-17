@@ -1,10 +1,8 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
-import com.emag.model.dto.AddProductDTO;
-import com.emag.model.pojo.Product;
-import com.emag.model.pojo.User;
-import com.emag.model.repository.ProductRepository;
+import com.emag.model.dto.product.RequestProductDTO;
+import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +23,8 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @PostMapping
-    public ResponseEntity<AddProductDTO> addProduct(@RequestBody AddProductDTO p , HttpServletRequest request){
+    @PostMapping("/products")
+    public ResponseEntity<ResponseProductDTO> addProduct(@RequestBody RequestProductDTO p , HttpServletRequest request){
         if(!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("Not admin!");
         }

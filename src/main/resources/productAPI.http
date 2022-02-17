@@ -1,0 +1,13 @@
+POST http://localhost:9999/products
+Content-Type: application/json
+
+{
+ "name" : "Some product",
+  "subCategoryId" : 1 ,
+  "brand" : "some brand" ,
+  "model" : "some model" ,
+  "price" : 25.66,
+  "quantity" : 2,
+  "description" : "Some stupid product",
+  "warrantyMonths" : 15
+}

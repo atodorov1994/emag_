@@ -4,7 +4,9 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.security.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @Entity
@@ -19,6 +21,9 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int discountPercent;
-    private LocalDateTime startDate;
-    private LocalDateTime expireDate;
+    private Timestamp startDate;
+    private Timestamp expireDate;
+    @OneToMany(mappedBy = "discount")
+    List<Product> products;
+
 }
