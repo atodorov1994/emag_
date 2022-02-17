@@ -1,0 +1,16 @@
+### add category ###
+POST localhost:9999/categories
+Content-Type: application/json
+
+{
+  "categoryName": "CD"
+}
+
+### edit category ###
+PUT localhost:9999/categories
+Content-Type: application/json
+
+{
+  "oldName": "TV",
+  "newName": "Television"
+}

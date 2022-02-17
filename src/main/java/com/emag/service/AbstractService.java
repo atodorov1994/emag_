@@ -17,8 +17,8 @@ public abstract class AbstractService {
 //    @Autowired
 //    protected ProductRepository productRepository;
 //
-//    @Autowired
-//    protected CategoryRepository categoryRepository;
+    @Autowired
+    protected CategoryRepository categoryRepository;
 //
 //    @Autowired
 //    protected DiscountRepository discountRepository;
@@ -45,9 +45,4 @@ public abstract class AbstractService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public  Product addProduct(Product p){
-// TODO
-        return null;
-
-    }
 }

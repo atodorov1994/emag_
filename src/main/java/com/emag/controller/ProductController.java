@@ -1,6 +1,7 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
+import com.emag.model.dto.AddProductDTO;
 import com.emag.model.pojo.Product;
 import com.emag.model.pojo.User;
 import com.emag.model.repository.ProductRepository;
@@ -24,7 +25,7 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product p , HttpSession session){
+    public ResponseEntity<AddProductDTO> addProduct(@RequestBody AddProductDTO p , HttpSession session){
         if(!sessionManager.userHasPrivileges(session)){
             throw new UnauthorizedException("Not admin!");
         }

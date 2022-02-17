@@ -1,7 +1,7 @@
 package com.emag.model.pojo;
 
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,7 +9,10 @@ import javax.persistence.*;
 @Component
 @Entity
 @Table(name = "sub_categories")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubCategory {
 
     @Id
