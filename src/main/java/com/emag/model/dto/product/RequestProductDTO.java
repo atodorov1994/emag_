@@ -19,6 +19,7 @@ public class RequestProductDTO {
     private double price;
     @NotNull(message = "Product quantity is mandatory!")
     private int quantity;
+
     private String description;
     private int warrantyMonths;
 }

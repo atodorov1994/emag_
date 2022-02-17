@@ -1,6 +1,6 @@
 package com.emag.model.pojo;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 @Component
 @Entity
 @Table(name = "reviews")
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Review {
 
     @Id
@@ -17,13 +20,11 @@ public class Review {
     private long id;
 
     @ManyToOne
-    @JoinTable(name = "users")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User reviewer;
 
     @ManyToOne
-    @JoinTable(name = "products")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     private String title;
