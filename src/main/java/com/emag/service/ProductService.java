@@ -1,7 +1,7 @@
 package com.emag.service;
 
 import com.emag.exception.BadRequestException;
-import com.emag.exception.MethodNotFoundException;
+import com.emag.exception.NotFoundException;
 import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
@@ -26,7 +26,7 @@ public class ProductService extends AbstractService{
 
     public ResponseProductDTO editProduct(RequestProductDTO p, long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new MethodNotFoundException("Product does not exist!"));
+                .orElseThrow(() -> new NotFoundException("Product does not exist!"));
         String brand = p.getBrand();
         if (!brand.isBlank()){
             product.setBrand(brand);
@@ -43,7 +43,7 @@ public class ProductService extends AbstractService{
 
     public ResponseProductDTO deleteProduct(long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new MethodNotFoundException("Product doest not exist"));
+                .orElseThrow(() -> new NotFoundException("Product doest not exist"));
         productRepository.delete(product);
         return modelMapper.map(product , ResponseProductDTO.class);
     }
@@ -51,7 +51,7 @@ public class ProductService extends AbstractService{
 
     public ResponseProductDTO getProductById(long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new MethodNotFoundException("Product does not exist"));
+                .orElseThrow(() -> new NotFoundException("Product does not exist"));
 //        TODO some validations
 
         return modelMapper.map(product , ResponseProductDTO.class);
@@ -60,7 +60,7 @@ public class ProductService extends AbstractService{
 
     public LikedProductsForUserDTO addProductToFavourites(long id, User user) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new MethodNotFoundException("Product does not exist"));
+                .orElseThrow(() -> new NotFoundException("Product does not exist"));
         List<Product> likedProducts = user.getLikedProducts();
         if (likedProducts.contains(product)){
             throw new BadRequestException("Product already liked!");
@@ -74,7 +74,7 @@ public class ProductService extends AbstractService{
 
     public LikedProductsForUserDTO removeProductFromFavourites(long id, User user) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new MethodNotFoundException("Product does not exist"));
+                .orElseThrow(() -> new NotFoundException("Product does not exist"));
         List<Product> likedProducts = user.getLikedProducts();
         if (!likedProducts.contains(product)){
             throw new BadRequestException("Product is not liked !");

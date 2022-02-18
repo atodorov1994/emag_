@@ -37,11 +37,7 @@ public class User {
     private Timestamp createdAt;
     private String gender;
     private LocalDate birthDate;
-
-    @OneToOne
-    @JsonManagedReference
-    @JoinColumn(name = "image_id")
-    private UserImage image;
+    private String imageUrl;
 
     private String nickname;
 

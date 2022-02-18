@@ -1,0 +1,35 @@
+
+##############################################      ADD SUBCATEGORY     ##########################################
+POST localhost:9999/subcategories
+Content-Type: application/json
+
+{
+  "subCategoryName": "GamingPC",
+  "categoryName" : "PC"
+}
+
+
+##############################################      EDIT SUBCATEGORY     ##########################################
+PUT localhost:9999/subcategories
+Content-Type: application/json
+
+{
+  "oldName": "Laptop",
+  "newName": "Notebook"
+}
+
+##############################################      FIND ALL SUBCATEGORIES BY CATEGORY   ##########################################
+GET localhost:9999/subcategories
+Content-Type: application/json
+
+{
+  "name": "PC"
+}
+
+##############################################      DELETE SUBCATEGORY     ##########################################
+DELETE localhost:9999/subcategories
+Content-Type: application/json
+
+{
+  "name": "dsfsad"
+}

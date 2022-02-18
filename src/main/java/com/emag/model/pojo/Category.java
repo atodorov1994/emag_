@@ -1,6 +1,7 @@
 package com.emag.model.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,8 @@ public class Category {
     private long id;
     private String categoryName;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "category")
+    @JsonBackReference
     List<SubCategory> subCategories;
+
 }

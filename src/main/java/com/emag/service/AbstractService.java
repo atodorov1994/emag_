@@ -19,9 +19,9 @@ public abstract class AbstractService {
 
     @Autowired
     protected CategoryRepository categoryRepository;
-//
-//    @Autowired
-//    protected DiscountRepository discountRepository;
+
+    @Autowired
+    protected DiscountRepository discountRepository;
 //
 //    @Autowired
 //    protected OrderRepository orderRepository;
@@ -32,8 +32,8 @@ public abstract class AbstractService {
 //    @Autowired
 //    protected ReviewRepository reviewRepository;
 //
-//    @Autowired
-//    protected SubCategoryRepository subCategoryRepository;
+    @Autowired
+    protected SubCategoryRepository subCategoryRepository;
 //
 //    @Autowired
 //    protected UserImageRepository userImageRepository;
