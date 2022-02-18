@@ -1,8 +1,6 @@
 package com.emag.model.dto.user;
 
-import com.emag.model.dto.AddressDTO;
 import com.emag.model.pojo.Address;
-import com.emag.model.pojo.UserImage;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +16,7 @@ public class UserWithoutPasswordDTO {
     private String email;
     private String fullName;
     private Timestamp createdAt;
-    private UserImage image;
+    private String imageUrl;
     private String mobilePhone;
     private boolean isAdmin;
     private LocalDate birthDate;

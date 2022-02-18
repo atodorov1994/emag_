@@ -40,3 +40,13 @@ POST http://localhost:9999/products/2/fav
 
 #################################################      REMOVE PRODUCT FROM FAV        ###################################
 DELETE http://localhost:9999/products/2/fav
+
+#####################################################      ADD DISCOUNT        ######################################
+POST http://localhost:9999/discounts
+Content-Type: application/json
+
+{
+  "discountPercent" : 10,
+  "startDate" : "2023-04-18T12:51",
+  "expireDate" : "2024-04-18T12:51"
+}

@@ -1,7 +1,7 @@
 package com.emag.service;
 
 import com.emag.exception.BadRequestException;
-import com.emag.exception.MethodNotFoundException;
+import com.emag.exception.NotFoundException;
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.AddressDTO;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
@@ -58,11 +58,11 @@ public class UserService extends AbstractService {
         String password = dto.getPassword();
         User userFromDb = userRepository.findByEmail(email);
         if (userFromDb == null) {
-            throw new MethodNotFoundException("Wrong email!");
+            throw new NotFoundException("Wrong email!");
         }
         String passwordFromDb = userFromDb.getPassword();
         if (!passwordEncoder.matches(password, passwordFromDb)) {
-            throw new MethodNotFoundException("Wrong password!");
+            throw new NotFoundException("Wrong password!");
         }
         return modelMapper.map(userFromDb, UserWithoutPasswordDTO.class);
     }
@@ -78,7 +78,7 @@ public class UserService extends AbstractService {
 
 
     public UserWithoutPasswordDTO editUserData(long id, EditUserRequestDTO dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new MethodNotFoundException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
         String mobilePhone = dto.getMobilePhone();
         if (mobilePhone != null) {
             if (!UserUtility.isValidMobilePhone(mobilePhone)) {
@@ -118,7 +118,7 @@ public class UserService extends AbstractService {
     }
 
     public UserWithoutPasswordDTO editUserPassword(long id, EditPasswordRequestDTO dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new MethodNotFoundException("User not found!"));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found!"));
         String oldPass = dto.getOldPassword();
         String newPass = dto.getNewPassword();
         String newConfirmPass = dto.getConfirmNewPassword();

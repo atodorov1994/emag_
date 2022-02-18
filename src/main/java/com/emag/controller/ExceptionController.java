@@ -2,7 +2,7 @@ package com.emag.controller;
 
 import com.emag.exception.AuthenticationException;
 import com.emag.exception.BadRequestException;
-import com.emag.exception.MethodNotFoundException;
+import com.emag.exception.NotFoundException;
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         dto.setTime(LocalDateTime.now());
         return dto;
     }
-    @ExceptionHandler(value = {MethodNotFoundException.class})
+    @ExceptionHandler(value = {NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorDTO handleNotFound(Exception e){
@@ -44,6 +44,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         dto.setMessage(e.getMessage());
         dto.setStatus(HttpStatus.NOT_FOUND.value());
         dto.setTime(LocalDateTime.now());
+        e.printStackTrace();
         return dto;
     }
 

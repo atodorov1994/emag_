@@ -13,15 +13,16 @@ import java.util.List;
 public class CategoryService extends AbstractService {
 
 
-    public Category addCategory(Category c) {
-        String name = c.getCategoryName();
+    public Category addCategory(CategoryWithoutIdDTO c) {
+        String name = c.getName();
         if (name.trim().length()<=1){
             throw new BadRequestException("Wrong credentials!");
         }
         if (categoryRepository.findByCategoryName(name) != null){
             throw new BadRequestException("Category already exists!");
         }
-        return categoryRepository.save(c);
+        Category category = modelMapper.map(c,Category.class);
+        return categoryRepository.save(category);
     }
 
 
