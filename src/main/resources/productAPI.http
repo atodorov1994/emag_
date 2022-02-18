@@ -1,3 +1,5 @@
+
+#####################################################      ADD PRODUCT        ######################################
 POST http://localhost:9999/products
 Content-Type: application/json
 
@@ -12,3 +14,29 @@ Content-Type: application/json
   "warrantyMonths" : 15
 }
 
+#####################################################      EDIT PRODUCT        ######################################
+PUT http://localhost:9999/products/1
+Content-Type: application/json
+
+{
+ "name" : "Some product",
+  "subCategoryId" : 1 ,
+  "brand" : "some brand" ,
+  "model" : "some model" ,
+  "price" : 0,
+  "quantity" : 2,
+  "description" : "Some stupid product",
+  "warrantyMonths" : 15
+}
+
+#################################################      GET PRODUCT BY ID        ######################################
+GET http://localhost:9999/products/1
+
+#################################################      DELETE PRODUCT BY ID        ###################################
+DELETE http://localhost:9999/products/1
+
+#################################################      ADD PRODUCT TO FAV        ###################################
+POST http://localhost:9999/products/2/fav
+
+#################################################      REMOVE PRODUCT FROM FAV        ###################################
+DELETE http://localhost:9999/products/2/fav

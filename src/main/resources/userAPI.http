@@ -1,3 +1,7 @@
+
+
+############################################################ REGISTER ########################################################
+
 ### REGISTER 5###
 POST localhost:9999/users
 Content-Type: application/json
@@ -37,10 +41,10 @@ Content-Type: application/json
 }
 
 
-### GET BY ID ###
- GET localhost:9999/users/2
+################################################## GET BY ID #######################################################
+ GET localhost:9999/users/4
 
-### LOGIN ###
+################################################### LOGIN ##########################################################
  POST localhost:9999/users/login
 Content-Type: application/json
 
@@ -49,10 +53,10 @@ Content-Type: application/json
   "password" : "abcdsA1526!"
 }
 
-### LOGOUT ###
+################################################## LOGOUT #########################################################
  POST localhost:9999/users/logout
 
-### CHANGE USER PASS ###
+############################################## CHANGE USER PASS ###################################################
 PUT localhost:9999/users/9/pass
 Content-Type: application/json
 
@@ -62,7 +66,7 @@ Content-Type: application/json
   "confirmNewPassword" : "15186994aT!1520"
 }
 
-### CHANGE USER DATA ###
+############################################# CHANGE USER DATA ####################################################
 PUT localhost:9999/users/4
 Content-Type: application/json
 

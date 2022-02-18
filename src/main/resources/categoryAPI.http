@@ -1,25 +1,27 @@
-### add category ###
+
+##############################################      ADD CATEGORY     ##########################################
 POST localhost:9999/categories
 Content-Type: application/json
 
 {
-  "categoryName": "CD"
+  "categoryName": "MAIL"
 }
 
-### edit category ###
+
+##############################################      EDIT CATEGORY     ##########################################
 PUT localhost:9999/categories
 Content-Type: application/json
 
 {
-  "oldName": "TV",
+  "oldName": "CD",
   "newName": "Television"
 }
 
-### find all categories ###
+##############################################      FIND ALL  CATEGORIES    ##########################################
 GET localhost:9999/categories
 Content-Type: application/json
 
-### delete category ###
+##############################################      DELETE CATEGORY     ##########################################
 DELETE localhost:9999/categories
 Content-Type: application/json
 

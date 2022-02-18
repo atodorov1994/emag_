@@ -62,12 +62,13 @@ public class SessionManager {
     public void validateSession (HttpServletRequest request){
         String remoteAddress = request.getRemoteAddr();
         HttpSession session = request.getSession();
-        if (!remoteAddress.equals(session.getAttribute(LOGGED_USER_REMOTE_ADDRESS))){
-            session.invalidate();
-            throw new AuthenticationException("IP mismatch!");
-        }
         if (session.getAttribute(LOGGED_USER_ID) == null) {
             throw new AuthenticationException("You have to be logged in!");
         }
+        if (!remoteAddress.equals(session.getAttribute(LOGGED_USER_REMOTE_ADDRESS))) {
+            session.invalidate();
+            throw new AuthenticationException("IP mismatch!");
+        }
     }
+
 }
