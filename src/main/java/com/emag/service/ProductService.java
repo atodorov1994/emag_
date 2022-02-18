@@ -6,10 +6,12 @@ import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
+import com.emag.model.pojo.SubCategory;
 import com.emag.model.pojo.User;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,5 +84,13 @@ public class ProductService extends AbstractService{
         user.setLikedProducts(likedProducts);
         userRepository.save(user);
         return modelMapper.map(user , LikedProductsForUserDTO.class);
+    }
+
+    public List<ResponseProductDTO> getProductsBySubcategory(long id) {
+        SubCategory subCategory = subCategoryRepository.findById(id);
+        List<Product> products = productRepository.getProductsBySubCategory(subCategory);
+        List<ResponseProductDTO> responseProductDTOS = new ArrayList<>();
+        products.forEach(product -> responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
+        return responseProductDTOS;
     }
 }
