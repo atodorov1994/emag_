@@ -1,9 +1,11 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
+import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
+import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -63,8 +67,10 @@ public class ProductController {
         return ResponseEntity.ok(productService.removeProductFromFavourites(id , sessionManager.getLoggedUser(request)));
     }
 
-
-
+    @GetMapping("/subcategories/{id}/products")
+    public List<ResponseProductDTO> getProductsBySubcategory(@PathVariable long id){
+        return productService.getProductsBySubcategory(id);
+    }
 
 
 
