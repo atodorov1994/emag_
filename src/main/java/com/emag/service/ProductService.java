@@ -68,7 +68,6 @@ public class ProductService extends AbstractService{
         likedProducts.add(product);
         product.getUsersLikedThisProduct().add(user);
         productRepository.save(product);
-// TODO test if works
         return modelMapper.map(user , LikedProductsForUserDTO.class);
     }
 
@@ -82,7 +81,6 @@ public class ProductService extends AbstractService{
         likedProducts.remove(product);
         user.setLikedProducts(likedProducts);
         userRepository.save(user);
-// TODO test if works
         return modelMapper.map(user , LikedProductsForUserDTO.class);
     }
 }

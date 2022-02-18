@@ -67,6 +67,8 @@ public class User {
     @OneToMany(mappedBy = "reviewer")
     private List<Review> reviews;
 
+    
+
 
 
 
