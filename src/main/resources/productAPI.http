@@ -4,18 +4,18 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
- "name" : "Some product",
+ "name" : "Brush",
   "subCategoryId" : 1 ,
   "brand" : "some brand" ,
   "model" : "some model" ,
-  "price" : 25.66,
+  "price" : 50.00,
   "quantity" : 2,
   "description" : "Some stupid product",
   "warrantyMonths" : 15
 }
 
 #####################################################      EDIT PRODUCT        ######################################
-PUT http://localhost:9999/products/1
+PUT http://localhost:9999/products/3
 Content-Type: application/json
 
 {
@@ -33,20 +33,23 @@ Content-Type: application/json
 GET http://localhost:9999/products/1
 
 #################################################      DELETE PRODUCT BY ID        ###################################
-DELETE http://localhost:9999/products/1
+DELETE http://localhost:9999/products/3
 
 #################################################      ADD PRODUCT TO FAV        ###################################
 POST http://localhost:9999/products/2/fav
 
-#################################################      REMOVE PRODUCT FROM FAV        ###################################
+#################################################      REMOVE PRODUCT FROM FAV        ##############################
 DELETE http://localhost:9999/products/2/fav
 
 #####################################################      ADD DISCOUNT        ######################################
-POST http://localhost:9999/discounts
+POST http://localhost:9999/discounts/6
 Content-Type: application/json
 
 {
-  "discountPercent" : 10,
-  "startDate" : "2023-04-18T12:51",
-  "expireDate" : "2024-04-18T12:51"
+  "discountPercent" : 18,
+  "startDate" : "2023-04-18T12:51:00.000+00:00",
+  "expireDate" : "2024-04-18T12:51:00.000+00:00"
 }
+
+###########################################      GET ALL PRODUCTS BY SUBCATEGORY        #############################
+GET http://localhost:9999/subcategories/1/products

@@ -1,8 +1,8 @@
 package com.emag.service;
 
 import com.emag.exception.BadRequestException;
+import com.emag.exception.NotFoundException;
 import com.emag.model.dto.DiscountDTO;
-import com.emag.model.pojo.Category;
 import com.emag.model.pojo.Discount;
 import com.emag.model.pojo.Product;
 import org.springframework.stereotype.Service;
@@ -12,58 +12,40 @@ import java.time.LocalDateTime;
 
 @Service
 public class DiscountService extends AbstractService{
-    public Discount createDiscount(DiscountDTO dto){
-        this.validateDiscount(dto);
-        Discount discount = new Discount();
-        discount.setDiscountPercent(dto.getDiscountPercent());
-        if(dto.getStartDate() != null && dto.getStartDate().length() > 0){
-            LocalDateTime startDate = parseDate(dto.getStartDate());
-            discount.setStartDate(Timestamp.valueOf(startDate));
-            if(dto.getExpireDate() != null && dto.getExpireDate().length() > 0){
-                LocalDateTime expireDate = parseDate(dto.getExpireDate());
-                discount.setExpireDate(Timestamp.valueOf(expireDate));
-            }
-        }
-        Discount discount1 = discountRepository.findDiscountByDiscountPercentAndStartDateAndExpireDate(discount.getDiscountPercent(), discount.getStartDate(),discount.getExpireDate());
-        if (discount1 != null){
-            return discount1;
-        }
+    public Discount createDiscount(DiscountDTO dto , long productId){
+        this.validateDiscountRequest(dto);
+        int discountPercent = dto.getDiscountPercent();
+        Timestamp startDate = dto.getStartDate();
+        Timestamp expireDate = dto.getExpireDate();
+//        If requested discount equals discount from DB -> return discount from DB , else create new discount
+        Discount discount = discountRepository.findDiscountByDiscountPercentAndStartDateAndExpireDate
+                (discountPercent, startDate , expireDate).orElse(modelMapper.map(dto , Discount.class));
+//        Set discount and discounted price to product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found!"));
+        double price = product.getPrice();
+        double discountedPrice = price - price*discountPercent/100;
+        product.setDiscount(discount);
+        product.setPrice(discountedPrice);
         return discountRepository.save(discount);
     }
 
-
-    private LocalDateTime parseDate(String startDate) {
-        try {
-            LocalDateTime checkDate = LocalDateTime.parse(startDate);
-            return checkDate;
-        }catch (Exception e){
-            throw new BadRequestException("Date is not valid");
-        }
-    }
-
-    private void validateDiscount(DiscountDTO dto){
-        if(dto.getDiscountPercent() == null){
+    private void validateDiscountRequest(DiscountDTO dto){
+        int discountPercent = dto.getDiscountPercent();
+        Timestamp startDate = dto.getStartDate();
+        Timestamp expireDate = dto.getExpireDate();
+        if(discountPercent <= 0){
             throw new BadRequestException("Enter a valid discount percent");
-        }else {
-            if (dto.getDiscountPercent() == 0){
-                throw new BadRequestException("Enter a valid discount percent");
-            }
         }
-        LocalDateTime startDate;
-        if(dto.getStartDate() == null){
+        if(startDate == null){
             throw new BadRequestException("Start date is mandatory");
-        } else{
-            startDate = parseDate(dto.getStartDate());
         }
-        if (startDate.isBefore(LocalDateTime.now())){
+        if (startDate.toLocalDateTime().isBefore(LocalDateTime.now())){
             throw new BadRequestException("Invalid date time!");
         }
-        if (dto.getExpireDate()!=null) {
-            if (dto.getExpireDate().trim().length() > 0) {
-                LocalDateTime endDate = parseDate(dto.getExpireDate());
-                if (endDate.isBefore(startDate)) {
-                    throw new BadRequestException("Enter a valid expiration date");
-                }
+        if (expireDate != null) {
+            if (expireDate.toLocalDateTime().isBefore(startDate.toLocalDateTime())) {
+                throw new BadRequestException("Enter a valid expiration date");
             }
         }
     }

@@ -1,6 +1,4 @@
 package com.emag.controller;
-
-
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.EditCategoryDTO;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;

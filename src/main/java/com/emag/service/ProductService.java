@@ -87,7 +87,8 @@ public class ProductService extends AbstractService{
     }
 
     public List<ResponseProductDTO> getProductsBySubcategory(long id) {
-        SubCategory subCategory = subCategoryRepository.findById(id);
+        SubCategory subCategory = subCategoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
         List<Product> products = productRepository.getProductsBySubCategory(subCategory);
         List<ResponseProductDTO> responseProductDTOS = new ArrayList<>();
         products.forEach(product -> responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));

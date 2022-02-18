@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface DiscountRepository extends JpaRepository<Discount, Long> {
-    Discount findDiscountByDiscountPercentAndStartDateAndExpireDate(int discountPercent, Timestamp startDate, Timestamp expireDate);
+    Optional<Discount> findDiscountByDiscountPercentAndStartDateAndExpireDate(int discountPercent, Timestamp startDate, Timestamp expireDate);
 }

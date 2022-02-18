@@ -1,5 +1,6 @@
 package com.emag.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
@@ -61,7 +62,17 @@ public class User {
     private List<Product> likedProducts;
 
     @OneToMany(mappedBy = "reviewer")
+    @JsonBackReference
     private List<Review> reviews;
+
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(
+            name = "users_like_reviews",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "review_id")}
+    )
+    List<Review> reviewsLikedByUser;
 
     
 
