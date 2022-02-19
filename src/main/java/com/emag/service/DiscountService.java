@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Service
 public class DiscountService extends AbstractService{
-    public Discount createDiscount(DiscountDTO dto , long productId){
+    public Discount createDiscount(DiscountDTO dto , long id){
         this.validateDiscountRequest(dto);
         int discountPercent = dto.getDiscountPercent();
         Timestamp startDate = dto.getStartDate();
@@ -21,7 +21,7 @@ public class DiscountService extends AbstractService{
         Discount discount = discountRepository.findDiscountByDiscountPercentAndStartDateAndExpireDate
                 (discountPercent, startDate , expireDate).orElse(modelMapper.map(dto , Discount.class));
 //        Set discount and discounted price to product
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found!"));
         double price = product.getPrice();
         double discountedPrice = price - price*discountPercent/100;

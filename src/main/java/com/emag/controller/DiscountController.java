@@ -24,7 +24,7 @@ public class DiscountController {
     private DiscountService discountService;
 
     @PostMapping("/discounts/{id}")
-    public Discount addDiscount(@PathVariable long id , @RequestBody @Valid DiscountDTO dto, HttpServletRequest request){
+    public Discount addDiscount(@RequestBody @Valid DiscountDTO dto, HttpServletRequest request , @PathVariable long id ){
         if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -93,5 +94,29 @@ public class ProductService extends AbstractService{
         List<ResponseProductDTO> responseProductDTOS = new ArrayList<>();
         products.forEach(product -> responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
         return responseProductDTOS;
+    }
+
+    public List<ResponseProductDTO> searchProductsByKeyword(String keywordSequence) {
+        HashSet<Product> foundProducts = new HashSet<>();
+        String[] splitKeywords = keywordSequence.trim().split("\\s+");
+        for (String keyword : splitKeywords) {
+            foundProducts.addAll(
+                    productRepository.
+                            findByNameContainingOrDescriptionContaining(keyword, keyword)
+            );
+        }
+        if (foundProducts.isEmpty()){
+            throw new NotFoundException("No products found");
+        }
+        List<ResponseProductDTO> foundProductsDTOs = new ArrayList<>();
+        foundProducts.forEach(product -> foundProductsDTOs.add(modelMapper.map(product , ResponseProductDTO.class)));
+        return foundProductsDTOs;
+    }
+
+    public List<ResponseProductDTO> getAllFavouriteProducts(User user) {
+        List<Product> likedProducts = user.getLikedProducts();
+        List<ResponseProductDTO> likedProductsDTO = new ArrayList<>();
+        likedProducts.forEach(product -> likedProductsDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
+        return likedProductsDTO;
     }
 }
