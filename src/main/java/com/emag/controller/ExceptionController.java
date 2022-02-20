@@ -34,6 +34,7 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         dto.setMessage(e.getMessage());
         dto.setStatus(HttpStatus.BAD_REQUEST.value());
         dto.setTime(LocalDateTime.now());
+        e.printStackTrace();
         return dto;
     }
     @ExceptionHandler(value = {NotFoundException.class})

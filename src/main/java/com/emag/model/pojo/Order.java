@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,5 +34,5 @@ public class Order {
     List<OrderedProduct> orderedProducts;
 
 
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
 }

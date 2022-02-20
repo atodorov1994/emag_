@@ -1,11 +1,11 @@
 
 
 ###################################      ADD PRODUCT TO CART     ##########################################
-POST localhost:9999/cart/7
+POST localhost:9999/cart/13
 
 ###################################      GET ALL PRODUCTS FOR USER    #####################################
 GET localhost:9999/cart
 
 ###################################      REMOVE PRODUCT FROM CART    ######################################
-DELETE localhost:9999/cart/2
+DELETE localhost:9999/cart/14
 
