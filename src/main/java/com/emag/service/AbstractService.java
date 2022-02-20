@@ -31,9 +31,9 @@ public abstract class AbstractService {
 
 //    @Autowired
 //    protected ProductImageRepository productImageRepository;
-//
-//    @Autowired
-//    protected ReviewRepository reviewRepository;
+
+    @Autowired
+    protected ReviewRepository reviewRepository;
 //
     @Autowired
     protected SubCategoryRepository subCategoryRepository;

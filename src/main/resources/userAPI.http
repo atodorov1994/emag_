@@ -62,6 +62,14 @@ Content-Type: application/json
 "password" : "15186994aT!"
 }
 
+################################################### LOGIN 2 ##########################################################
+ POST localhost:9999/users/login
+Content-Type: application/json
+
+{
+  "email" : "ivan_debelan@abv.bg" ,
+  "password" : "abcdsA1526!"
+}
 ################################################## LOGOUT #########################################################
  POST localhost:9999/users/logout
 
