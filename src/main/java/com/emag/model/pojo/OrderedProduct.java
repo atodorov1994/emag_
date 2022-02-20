@@ -1,10 +1,7 @@
 package com.emag.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +10,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "orders_have_products")
 public class OrderedProduct {
 

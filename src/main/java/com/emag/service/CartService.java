@@ -1,5 +1,6 @@
 package com.emag.service;
 
+import com.emag.exception.BadRequestException;
 import com.emag.exception.NotFoundException;
 import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
@@ -17,13 +18,23 @@ public class CartService extends AbstractService{
     public UserCart addProductToCart(long id, User user) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found !"));
+        if (product.getDeletedAt() != null){
+            throw new BadRequestException("Product deleted");
+        }
+        int productAvailableQuantity = product.getQuantity();
         UserCart.UserCartKey primaryKey = new UserCart.UserCartKey();
         primaryKey.setProductId(id);
         primaryKey.setUserId(user.getId());
         UserCart userCart = cartRepository.findByPrimaryKey(primaryKey).orElse(null);
         if (userCart != null){
-            userCart.setQuantity(userCart.getQuantity() + 1);
-            return cartRepository.save(userCart);
+            int orderedQuantity = userCart.getQuantity();
+            if (productAvailableQuantity <= orderedQuantity){
+                throw new BadRequestException("Product not available!");
+            }
+            else {
+                userCart.setQuantity(userCart.getQuantity() + 1);
+                return cartRepository.save(userCart);
+            }
         }
         return cartRepository.save(new UserCart(primaryKey , user , product , 1));
 

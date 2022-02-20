@@ -26,6 +26,9 @@ public abstract class AbstractService {
     @Autowired
     protected OrderRepository orderRepository;
 
+    @Autowired
+    protected OrderedProductRepository orderedProductRepository;
+
 //    @Autowired
 //    protected ProductImageRepository productImageRepository;
 //
