@@ -15,6 +15,7 @@ public class SessionManager {
 
     private static final String LOGGED_USER_ID = "logged_user_id";
     private static final String LOGGED_USER_REMOTE_ADDRESS = "logged_user_remote_address";
+    private static final String SUBCATEGORY_ID = "subcategory_id";
 
     @Autowired
     private UserRepository userRepository;
@@ -71,4 +72,13 @@ public class SessionManager {
         }
     }
 
+    public void setSubcategoryId(HttpSession session , long id) {
+        session.setAttribute(SUBCATEGORY_ID , id);
+    }
+
+    public long getSubcategoryId(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        validateSession(request);
+        return (long) session.getAttribute(SUBCATEGORY_ID);
+    }
 }

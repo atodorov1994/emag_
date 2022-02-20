@@ -26,7 +26,7 @@ public class ResponseProductDTO {
     private int warrantyMonths;
     private Timestamp addedAt;
     private Timestamp deletedAt;
-    private double productRating;
+//    private double productRating;
     private Discount discount;
 
 }

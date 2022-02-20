@@ -10,8 +10,8 @@ Content-Type: application/json
   "fullName" : "Aleksandar Todorov" ,
   "password" : "15186994aT!" ,
   "confirmPassword" : "15186994aT!" ,
-  "isAdmin" : true,
-  "email" : "arabaraaaaaba@mail.bg"
+  "admin" : true ,
+  "email" : "att@mail.bg"
 }
 
 
@@ -24,7 +24,7 @@ Content-Type: application/json
  "password" : "abcdsA1526!" ,
  "confirmPassword" : "abcdsA1526!" ,
  "email" : "misho_shisho@abv.bg" ,
- "isAdmin" : true
+ "admin" : true
  }
 
 
@@ -37,7 +37,7 @@ Content-Type: application/json
   "password" : "abcdsA1526!" ,
   "confirmPassword" : "abcdsA1526!" ,
   "email" : "ivan_debelan@abv.bg" ,
-  "isAdmin" : false
+  "admin" : false
 }
 
 
@@ -49,8 +49,17 @@ Content-Type: application/json
 Content-Type: application/json
 
 {
-  "email" : "ivan_debelan@abv.bg" ,
-  "password" : "abcdsA1526!"
+  "email" : "att@mail.bg" ,
+  "password" : "15186994aT!"
+}
+
+###
+POST localhost:9999/users/login
+Content-Type: application/json
+
+{
+"email" : "arabaraaaaabaa@mail.bg" ,
+"password" : "15186994aT!"
 }
 
 ################################################### LOGIN 2 ##########################################################
@@ -88,6 +97,16 @@ Content-Type: application/json
   "gender" : "Male",
   "birthDate" : "1994-04-23"
 }
+
+
+############################################# UPLOAD IMAGE ####################################################
+POST localhost:9999/users/1/image
+
+################################################### SUBSCRIBE ##########################################################
+ POST localhost:9999/users/subscribe
+
+################################################### UNSUBSCRIBE ##########################################################
+ POST localhost:9999/users/unsubscribe
 
 
 

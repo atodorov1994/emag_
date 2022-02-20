@@ -22,10 +22,10 @@ public abstract class AbstractService {
 
     @Autowired
     protected DiscountRepository discountRepository;
-//
-//    @Autowired
-//    protected OrderRepository orderRepository;
-//
+
+    @Autowired
+    protected OrderRepository orderRepository;
+
 //    @Autowired
 //    protected ProductImageRepository productImageRepository;
 
@@ -38,11 +38,18 @@ public abstract class AbstractService {
 //    @Autowired
 //    protected UserImageRepository userImageRepository;
 
+    @Autowired
+    protected CartRepository cartRepository;
+
 
     @Autowired
     protected ModelMapper modelMapper;
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    protected static final String[] ACCEPTED_IMAGE_FORMATS = {"jpeg" , "png" , "jpg"};
+    protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "reviews" , "added_desc" };
+
 
 }

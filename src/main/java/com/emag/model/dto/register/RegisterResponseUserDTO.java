@@ -11,6 +11,6 @@ public class RegisterResponseUserDTO {
     private long id;
     private String email;
     private String fullName;
-    @Column(name = "is_admin")
+//    @Column(name = "is_admin")
     private boolean isAdmin;
 }

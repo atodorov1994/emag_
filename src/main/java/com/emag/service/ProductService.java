@@ -11,18 +11,26 @@ import com.emag.model.pojo.User;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ProductService extends AbstractService{
 
     public ResponseProductDTO addProduct(RequestProductDTO p){
-        Product product = modelMapper.map(p , Product.class);
-
+        SubCategory subCategory = subCategoryRepository.findById( p.getSubCategoryId())
+                .orElseThrow(() -> new NotFoundException("No such subcategory !"));
+//        TODO not working with model mapper
+//        Product product = modelMapper.map(p , Product.class);
+//        product.setSubCategory(subCategory);
+        Product product = new Product();
+        product.setPrice(p.getPrice());
+        product.setDescription(p.getDescription());
+        product.setBrand(p.getBrand());
+        product.setModel(p.getModel());
+        product.setName(p.getName());
+        product.setQuantity(p.getQuantity());
+        product.setSubCategory(subCategory);
         //TODO validations
-
         product.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
         return modelMapper.map(productRepository.save(product) , ResponseProductDTO.class);
     }
@@ -118,5 +126,38 @@ public class ProductService extends AbstractService{
         List<ResponseProductDTO> likedProductsDTO = new ArrayList<>();
         likedProducts.forEach(product -> likedProductsDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
         return likedProductsDTO;
+    }
+
+    public List<ResponseProductDTO> getProductsBySubcategorySortedBy(long subcategoryId, String sortedBy) {
+        SubCategory subCategory = subCategoryRepository.findById(subcategoryId)
+                .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
+        if (!Arrays.asList(SORTED_BY).contains(sortedBy.toLowerCase())){
+            throw new BadRequestException("Invalid sorting type");
+        }
+
+        List<Product> products = productRepository.getProductsBySubCategory(subCategory);
+        ArrayList<ResponseProductDTO> productDTO = new ArrayList<>();
+        products.forEach(product -> productDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
+        productDTO.sort(Comparator.comparingDouble(ResponseProductDTO::getPrice));
+        switch (sortedBy) {
+            case "price_asc" : {
+                productDTO.sort(Comparator.comparingDouble(ResponseProductDTO::getPrice));
+                return productDTO;
+            }
+            case "price_desc" : {
+                productDTO.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
+                return productDTO;
+            }
+//               TODO add by review count
+//               case  "reviews" -> {
+//                productDTO.sort((o1, o2) -> o1.get);
+//               }
+            case "added_desc" : {
+                productDTO.sort(Comparator.comparing(ResponseProductDTO::getAddedAt));
+                return productDTO;
+            }
+            default:
+                throw new BadRequestException("Unexpected value: " + sortedBy);
+        }
     }
 }
