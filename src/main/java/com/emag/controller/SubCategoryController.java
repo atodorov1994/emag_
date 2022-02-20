@@ -1,11 +1,10 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
-import com.emag.model.dto.EditCategoryDTO;
+import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.dto.subcategory.AddSubCategoryDTO;
 import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;
-import com.emag.model.pojo.Category;
 import com.emag.model.pojo.SubCategory;
 import com.emag.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

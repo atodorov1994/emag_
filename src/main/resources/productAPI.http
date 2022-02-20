@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
  "name" : "Brush",
-  "subCategoryId" : 1 ,
+  "subCategoryId" : 2 ,
   "brand" : "some brand" ,
   "model" : "some model" ,
   "price" : 50.00,

@@ -1,4 +1,4 @@
-package com.emag.model.dto;
+package com.emag.model.dto.review;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class DoReviewDTO {
     @Min(value = 1, message = "Product id should not be less than 1")
-    private Integer productId;
+    private Long productId;
     @NotBlank(message = "Title is mandatory")
     private String title;
     @NotBlank(message = "Description is mandatory")

@@ -2,7 +2,7 @@ package com.emag.service;
 
 import com.emag.exception.BadRequestException;
 import com.emag.exception.NotFoundException;
-import com.emag.model.dto.EditCategoryDTO;
+import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.dto.subcategory.AddSubCategoryDTO;
 import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;

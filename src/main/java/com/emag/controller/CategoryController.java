@@ -1,6 +1,6 @@
 package com.emag.controller;
 import com.emag.exception.UnauthorizedException;
-import com.emag.model.dto.EditCategoryDTO;
+import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.pojo.Category;
 import com.emag.service.CategoryService;
