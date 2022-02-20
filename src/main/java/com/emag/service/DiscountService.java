@@ -5,10 +5,12 @@ import com.emag.exception.NotFoundException;
 import com.emag.model.dto.DiscountDTO;
 import com.emag.model.pojo.Discount;
 import com.emag.model.pojo.Product;
+import com.emag.model.pojo.User;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class DiscountService extends AbstractService{
@@ -27,6 +29,9 @@ public class DiscountService extends AbstractService{
         double discountedPrice = price - price*discountPercent/100;
         product.setDiscount(discount);
         product.setPrice(discountedPrice);
+        List<User> users = userRepository.findAllBySubscribedIsTrue();
+        String mailText = product.getName()+ " is only now with "+discount.getDiscountPercent()+" down of the price. Hurry up!";
+        users.forEach(user -> emailService.sendSimpleMessage(user.getEmail(), "New discount in town", mailText));
         return discountRepository.save(discount);
     }
 

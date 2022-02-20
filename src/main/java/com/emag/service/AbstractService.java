@@ -4,9 +4,14 @@ import com.emag.model.pojo.Product;
 import com.emag.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public abstract class AbstractService {
+
+    @Autowired
+    protected EmailService emailService;
 
     @Autowired
     protected UserRepository userRepository;
@@ -53,6 +58,5 @@ public abstract class AbstractService {
 
     protected static final String[] ACCEPTED_IMAGE_FORMATS = {"jpeg" , "png" , "jpg"};
     protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "reviews" , "added_desc" };
-
 
 }

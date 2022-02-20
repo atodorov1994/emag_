@@ -4,11 +4,11 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
- "name" : "Product 25",
-  "subCategoryId" : 2 ,
+ "name" : "Product 21",
+  "subCategoryId" : 1 ,
   "brand" : "so" ,
   "model" : "some 31odel" ,
-  "price" : 586.00,
+  "price" : 1436.00,
   "quantity" : 2,
   "description" : "So321e stupid product",
   "warrantyMonths" : 15
@@ -42,12 +42,12 @@ POST http://localhost:9999/products/2/fav
 DELETE http://localhost:9999/products/2/fav
 
 #####################################################      ADD DISCOUNT        ######################################
-POST http://localhost:9999/discounts/15
+POST http://localhost:9999/discounts/2
 Content-Type: application/json
 
 {
   "discountPercent" : 25,
-  "startDate" : "2022-02-20T00:00:00.000+00:00",
+  "startDate" : "2022-02-21T01:00:00.000+00:00",
   "expireDate" : "2022-04-28T00:00:00.000+00:00"
 }
 

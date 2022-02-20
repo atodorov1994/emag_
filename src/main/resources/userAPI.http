@@ -7,11 +7,11 @@ POST localhost:9999/users
 Content-Type: application/json
 
 {
-  "fullName" : "Aleksandar Todorov" ,
+  "fullName" : "Victor Mladenov" ,
   "password" : "15186994aT!" ,
   "confirmPassword" : "15186994aT!" ,
-  "admin" : true ,
-  "email" : "att@mail.bg"
+  "admin" : false ,
+  "email" : "victor.m17777@gmail.com"
 }
 
 
@@ -42,14 +42,14 @@ Content-Type: application/json
 
 
 ################################################## GET BY ID #######################################################
- GET localhost:9999/users/4
+ GET localhost:9999/users/3
 
 ################################################### LOGIN ##########################################################
  POST localhost:9999/users/login
 Content-Type: application/json
 
 {
-  "email" : "att@mail.bg" ,
+  "email" : "victor.m17777@gmail.com" ,
   "password" : "15186994aT!"
 }
 
@@ -58,8 +58,8 @@ POST localhost:9999/users/login
 Content-Type: application/json
 
 {
-"email" : "arabaraaaaabaa@mail.bg" ,
-"password" : "15186994aT!"
+"email" : "misho_shisho@abv.bg" ,
+"password" : "abcdsA1526!"
 }
 
 ################################################### LOGIN 2 ##########################################################

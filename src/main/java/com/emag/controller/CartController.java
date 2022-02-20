@@ -23,6 +23,7 @@ public class CartController {
     @PostMapping("/cart/{productId}")
     public ResponseEntity<UserCart> addProductToCart(@RequestBody  @PathVariable long productId , HttpServletRequest request){
         return ResponseEntity.ok(cartService.addProductToCart(productId , sessionManager.getLoggedUser(request)));
+
     }
 
     @DeleteMapping("/cart/{productId}")
