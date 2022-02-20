@@ -4,13 +4,13 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
- "name" : "Brush",
-  "subCategoryId" : 1 ,
-  "brand" : "some brand" ,
-  "model" : "some model" ,
-  "price" : 50.00,
+ "name" : "Product 25",
+  "subCategoryId" : 7 ,
+  "brand" : "so" ,
+  "model" : "some 31odel" ,
+  "price" : 586.00,
   "quantity" : 2,
-  "description" : "Some stupid product",
+  "description" : "So321e stupid product",
   "warrantyMonths" : 15
 }
 
@@ -42,21 +42,24 @@ POST http://localhost:9999/products/2/fav
 DELETE http://localhost:9999/products/2/fav
 
 #####################################################      ADD DISCOUNT        ######################################
-POST http://localhost:9999/discounts/7
+POST http://localhost:9999/discounts/15
 Content-Type: application/json
 
 {
-  "discountPercent" : 18,
-  "startDate" : "2022-02-19T10:08:00.000+00:00",
-  "expireDate" : "2022-02-19T10:09:00.000+00:00"
+  "discountPercent" : 25,
+  "startDate" : "2022-02-20T00:00:00.000+00:00",
+  "expireDate" : "2022-04-28T00:00:00.000+00:00"
 }
 
 ###########################################      GET ALL PRODUCTS BY SUBCATEGORY        #############################
-GET http://localhost:9999/subcategories/1/products
+GET http://localhost:9999/subcategories/7/products
 
+###########################################     GET ALL PRODUCTS BY SUBCATEGORY SORTED  #############################
+GET http://localhost:9999/subcategories/products/price_desc
 
 ###########################################      SEARCH PRODUCTS BY KEYWORD        #############################
 GET http://localhost:9999/products/search/some
 
 ###########################################      GET ALL FAVOURITE PRODUCTS        #############################
 GET http://localhost:9999/products/fav
+

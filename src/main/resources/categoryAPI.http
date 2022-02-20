@@ -4,7 +4,7 @@ POST localhost:9999/categories
 Content-Type: application/json
 
 {
-  "name": "MAIL"
+  "name": "Category 9"
 }
 
 

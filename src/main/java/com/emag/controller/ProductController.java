@@ -25,6 +25,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+
     @PostMapping("/products")
     public ResponseEntity<ResponseProductDTO> addProduct(@RequestBody RequestProductDTO p , HttpServletRequest request){
         if(!sessionManager.userHasPrivileges(request)){
@@ -68,9 +69,18 @@ public class ProductController {
     }
 
     @GetMapping("/subcategories/{id}/products")
-    public List<ResponseProductDTO> getProductsBySubcategory(@PathVariable long id){
+    public List<ResponseProductDTO> getProductsBySubcategory(@PathVariable long id , HttpSession session){
+        sessionManager.setSubcategoryId(session , id);
         return productService.getProductsBySubcategory(id);
     }
+
+    @GetMapping("/subcategories/products/{sortedBy}")
+    public List<ResponseProductDTO> getProductsBySubcategorySortedBy (@PathVariable String sortedBy , HttpServletRequest request){
+        return productService.getProductsBySubcategorySortedBy (sessionManager.getSubcategoryId(request) , sortedBy);
+    }
+
+
+
 
     @GetMapping("/products/search/{keywordSequence}")
     public List<ResponseProductDTO> searchProductsByKeyword(@PathVariable String keywordSequence){
@@ -84,6 +94,7 @@ public class ProductController {
         }
         return ResponseEntity.ok(productService.getAllFavouriteProducts(sessionManager.getLoggedUser(request)));
     }
+
 
 
 

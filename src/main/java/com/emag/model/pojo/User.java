@@ -32,17 +32,20 @@ public class User {
     private String password;
     private String email;
     private String mobilePhone;
-    @Column(name = "is_admin" , nullable = false , columnDefinition = "TINYINT(1)")
-    @Type(type = "org.hibernate.type.NumericBooleanType")
+//    @Column(name = "is_admin" , nullable = false , columnDefinition = "INT")
+//    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isAdmin;
     private Timestamp createdAt;
     private String gender;
     private LocalDate birthDate;
     private String imageUrl;
-
     private String nickname;
 
-//    Adressess many to many relationship
+    @OneToMany(mappedBy = "buyer")
+    @JsonBackReference
+    private List<Order> orders;
+
+
     @ManyToMany
     @JsonManagedReference
     @JoinTable(
@@ -73,6 +76,14 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "review_id")}
     )
     List<Review> reviewsLikedByUser;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    List<UserCart> productsInCart;
+
+
+    private boolean subscribed;
+
 
     
 

@@ -4,15 +4,18 @@ import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
 import com.emag.model.dto.register.RegisterResponseUserDTO;
 import com.emag.model.dto.user.*;
+import com.emag.model.pojo.User;
 import com.emag.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 public class UserController {
@@ -70,6 +73,27 @@ public class UserController {
         }
         return userService.editUserPassword(id,dto);
     }
+
+
+    @PostMapping("/users/{id}/image")
+    public String uploadImage(@RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request) {
+        sessionManager.userHasPrivileges(request, id);
+        return userService.uploadImage(file,id);
+    }
+
+    @PostMapping("/users/subscribe")
+    public UserWithoutPasswordDTO subscribe(HttpServletRequest request){
+        return userService.subscribe(sessionManager.getLoggedUser(request));
+    }
+
+    @PostMapping("/users/unsubscribe")
+    public UserWithoutPasswordDTO unsubscribe(HttpServletRequest request){
+        return userService.unsubscribe(sessionManager.getLoggedUser(request));
+    }
+
+
+
+
 
 
 

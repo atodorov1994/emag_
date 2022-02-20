@@ -35,7 +35,8 @@ public class Product {
     private int warrantyMonths;
     private Timestamp addedAt;
     private Timestamp deletedAt;
-    private double productRating;
+//    TODO not working in find all products by subcat
+//    private double productRating;
 
     @ManyToOne
     @JsonManagedReference
@@ -49,6 +50,14 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonBackReference
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    private List<UserCart> productsInCart;
+
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    private List<OrderedProduct> orderedProducts;
 
 
 

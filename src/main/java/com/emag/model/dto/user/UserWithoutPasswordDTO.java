@@ -22,6 +22,7 @@ public class UserWithoutPasswordDTO {
     private LocalDate birthDate;
     private String gender;
     private List<Address> addresses;
+    private boolean isSubscribed;
 
 
 

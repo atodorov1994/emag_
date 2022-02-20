@@ -10,11 +10,19 @@ import com.emag.model.dto.user.*;
 import com.emag.model.pojo.Address;
 import com.emag.model.pojo.User;
 import com.emag.util.UserUtility;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Service
 public class UserService extends AbstractService {
@@ -39,15 +47,8 @@ public class UserService extends AbstractService {
             throw new BadRequestException("Invalid name format!");
         }
         String encodedPass = passwordEncoder.encode(password);
-        User user = new User();
-        user.setEmail(email);
+        User user = modelMapper.map(u , User.class);
         user.setPassword(encodedPass);
-        user.setFullName(u.getFullName());
-//        TODO admin not working
-
-        if (u.isAdmin()) {
-            user.setAdmin(true);
-        }
         user.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         user = userRepository.save(user);
         return modelMapper.map(user, RegisterResponseUserDTO.class);
@@ -140,5 +141,35 @@ public class UserService extends AbstractService {
     }
 
 
+    @SneakyThrows
+    public String uploadImage(MultipartFile file, long id) {
+        String[] strings = file.getOriginalFilename().split("\\.");
+        String extension = strings[strings.length-1];
+        if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
+            throw new BadRequestException("Unsupported file format !");
+        }
+        String name = System.nanoTime() + "." + extension;
+        Files.copy(file.getInputStream() ,
+                new File("user" + File.separator + "uploads" + File.separator + name).toPath() , StandardCopyOption.REPLACE_EXISTING);
+        User u = userRepository.getById(id);
+        u.setImageUrl(name);
+        userRepository.save(u);
+        return name;
+    }
 
+    public UserWithoutPasswordDTO subscribe(User user) {
+        if (user.isSubscribed()){
+            throw new BadRequestException("Already subscribed!");
+        }
+        user.setSubscribed(true);
+        return modelMapper.map(userRepository.save(user) , UserWithoutPasswordDTO.class);
+    }
+
+    public UserWithoutPasswordDTO unsubscribe(User user) {
+        if (!user.isSubscribed()){
+            throw new BadRequestException("Not subscribed!");
+        }
+        user.setSubscribed(false);
+        return modelMapper.map(userRepository.save(user) , UserWithoutPasswordDTO.class);
+    }
 }
