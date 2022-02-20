@@ -67,7 +67,7 @@ Content-Type: application/json
 Content-Type: application/json
 
 {
-  "email" : "misho_shisho@abv.bg" ,
+  "email" : "ivan_debelan@abv.bg" ,
   "password" : "abcdsA1526!"
 }
 ################################################## LOGOUT #########################################################
