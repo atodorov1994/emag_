@@ -33,11 +33,11 @@ POST localhost:9999/users
 Content-Type: application/json
 
 {
-  "fullName" : "Ivan Aleksiev" ,
+  "fullName" : "Kroasan Aleksiev" ,
   "password" : "abcdsA1526!" ,
   "confirmPassword" : "abcdsA1526!" ,
-  "email" : "ivan_debelan@abv.bg" ,
-  "admin" : false
+  "email" : "kroasan@abv.bg" ,
+  "admin" : true
 }
 
 
@@ -67,7 +67,7 @@ Content-Type: application/json
 Content-Type: application/json
 
 {
-  "email" : "ivan_debelan@abv.bg" ,
+  "email" : "kroasan@abv.bg" ,
   "password" : "abcdsA1526!"
 }
 ################################################## LOGOUT #########################################################

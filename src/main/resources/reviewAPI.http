@@ -35,5 +35,5 @@ GET localhost:9999/users/1/review
 Content-Type: application/json
 
 ##############################################      LIKE REVIEW   ##########################################
-POST localhost:9999/review/1/like
+POST localhost:9999/review/2/like
 Content-Type: application/json

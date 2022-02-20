@@ -160,4 +160,8 @@ public class ProductService extends AbstractService{
                 throw new BadRequestException("Unexpected value: " + sortedBy);
         }
     }
+
+    public List<Product> getProductsBetween(long subcategoryId, double min, double max) {
+        return productRepository.findAllBySubCategoryIdAndPriceIsBetween(subcategoryId, min, max);
+    }
 }

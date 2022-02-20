@@ -65,8 +65,12 @@ public class ReviewService extends AbstractService{
         if (likedReview.contains(review)){
             throw new BadRequestException("You have already liked this review");
         }
+        List<User> likers = review.getUsersLikedReview();
+        likers.add(user);
+        review.setUsersLikedReview(likers);
         likedReview.add(review);
         user.setReviewsLikedByUser(likedReview);
+        reviewRepository.save(review);
         return modelMapper.map(review,ReviewDTO.class);
     }
 

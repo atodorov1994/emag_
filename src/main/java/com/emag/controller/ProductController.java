@@ -6,6 +6,7 @@ import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;
+import com.emag.model.pojo.Product;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +81,10 @@ public class ProductController {
     }
 
 
-
+    @GetMapping("/subcategories/products/{min}/{max}")
+    public List<Product> getProductsBetween (@PathVariable double min, @PathVariable double max, HttpServletRequest request){
+        return productService.getProductsBetween (sessionManager.getSubcategoryId(request), min, max);
+    }
 
     @GetMapping("/products/search/{keywordSequence}")
     public List<ResponseProductDTO> searchProductsByKeyword(@PathVariable String keywordSequence){

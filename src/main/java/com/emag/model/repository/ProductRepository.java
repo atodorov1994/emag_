@@ -17,5 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByDiscount(Discount discount);
 
     Collection<? extends Product> findByNameContainingOrDescriptionContaining (String keyword, String keyword1);
+    List<Product> findAllBySubCategoryIdAndPriceIsBetween(long subCategoryId, double min, double max);
 
 }

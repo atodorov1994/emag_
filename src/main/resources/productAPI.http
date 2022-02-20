@@ -5,7 +5,7 @@ Content-Type: application/json
 
 {
  "name" : "Product 25",
-  "subCategoryId" : 7 ,
+  "subCategoryId" : 2 ,
   "brand" : "so" ,
   "model" : "some 31odel" ,
   "price" : 586.00,
@@ -52,7 +52,7 @@ Content-Type: application/json
 }
 
 ###########################################      GET ALL PRODUCTS BY SUBCATEGORY        #############################
-GET http://localhost:9999/subcategories/7/products
+GET http://localhost:9999/subcategories/2/products
 
 ###########################################     GET ALL PRODUCTS BY SUBCATEGORY SORTED  #############################
 GET http://localhost:9999/subcategories/products/price_desc
@@ -63,3 +63,5 @@ GET http://localhost:9999/products/search/some
 ###########################################      GET ALL FAVOURITE PRODUCTS        #############################
 GET http://localhost:9999/products/fav
 
+################################################   GET PRODUCT WHERE PRICE IS BETWEEN ######################################
+GET http://localhost:9999/subcategories/products/40/60
