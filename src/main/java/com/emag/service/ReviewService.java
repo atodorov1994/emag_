@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //TODO refactor DTO make product id to path variable
 
@@ -24,11 +25,22 @@ public class ReviewService extends AbstractService{
         if (reviewRepository.findReviewByReviewerAndProduct(user, product) != null){
             throw new BadRequestException("You have already reviewed this product");
         }
+
         Review review = modelMapper.map(r, Review.class);
+        review.setId(0);
         review.setReviewer(user);
         review.setProduct(product);
         review.setCreatedAt(LocalDateTime.now());
         review = reviewRepository.save(review);
+        List<Review> reviews = product.getReviews();
+        if (reviews.isEmpty()){
+            product.setProductRating(review.getRating());
+        }else {
+            double total = reviews.stream().map(Review::getRating).reduce(Integer::sum).orElse(null);
+            double rating = total / reviews.size();
+            product.setProductRating(rating);
+        }
+        productRepository.save(product);
         return modelMapper.map(review, ReviewDTO.class);
     }
 

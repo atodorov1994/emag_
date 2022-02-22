@@ -10,8 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public abstract class AbstractService {
 
+    protected static final long MAX_SIZE_OF_IMAGE = 20*1000000;
+
     @Autowired
-    protected EmailService emailService;
+    protected EmailServiceImpl emailService;
 
     @Autowired
     protected UserRepository userRepository;
@@ -34,8 +36,8 @@ public abstract class AbstractService {
     @Autowired
     protected OrderedProductRepository orderedProductRepository;
 
-//    @Autowired
-//    protected ProductImageRepository productImageRepository;
+    @Autowired
+    protected ProductImageRepository productImageRepository;
 
     @Autowired
     protected ReviewRepository reviewRepository;
