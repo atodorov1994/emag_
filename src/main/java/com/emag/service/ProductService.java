@@ -128,9 +128,10 @@ public class ProductService extends AbstractService{
         return likedProductsDTO;
     }
 
-    public List<ResponseProductDTO> getProductsBySubcategorySortedBy(long subcategoryId, String sortedBy) {
-        SubCategory subCategory = subCategoryRepository.findById(subcategoryId)
-                .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
+    public List<ResponseProductDTO> getProductsBySubcategorySortedBy(SubCategory subCategory, String sortedBy) {
+        if(subCategory == null) {
+            throw new NotFoundException("Subcategory not found!");
+        }
         if (!Arrays.asList(SORTED_BY).contains(sortedBy.toLowerCase())){
             throw new BadRequestException("Invalid sorting type");
         }
@@ -159,5 +160,9 @@ public class ProductService extends AbstractService{
             default:
                 throw new BadRequestException("Unexpected value: " + sortedBy);
         }
+    }
+
+    public List<Product> getProductsBetween(SubCategory subCategory, double min, double max) {
+        return productRepository.findAllBySubCategoryAndPriceIsBetween(subCategory, min, max);
     }
 }

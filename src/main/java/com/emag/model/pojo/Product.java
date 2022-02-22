@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+//TODO add rating for product and calculate it every time when make review
+
 @Component
 @Entity
 @Table(name = "products")

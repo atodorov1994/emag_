@@ -28,7 +28,8 @@ public class Review {
     private User reviewer;
 
     @ManyToMany(mappedBy = "reviewsLikedByUser")
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonManagedReference
     List<User> usersLikedReview;
 
     @ManyToOne
