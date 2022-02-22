@@ -2,6 +2,7 @@ package com.emag.service;
 
 import com.emag.exception.BadRequestException;
 import com.emag.exception.NotFoundException;
+import com.emag.model.dto.product.FilterProductsDTO;
 import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
@@ -22,6 +23,7 @@ import java.util.*;
 
 @Service
 public class ProductService extends AbstractService{
+
 
     public ResponseProductDTO addProduct(RequestProductDTO p){
         SubCategory subCategory = subCategoryRepository.findById( p.getSubCategoryId())
@@ -191,5 +193,18 @@ public class ProductService extends AbstractService{
         productImage.setProduct(p);
         productImageRepository.save(productImage);
         return name;
+    }
+
+    public List<ResponseProductDTO> filterProducts(FilterProductsDTO dto) {
+        if (dto.getSubcategoryId() != null) {
+            SubCategory subCategory = subCategoryRepository.findById(dto.getSubcategoryId())
+                    .orElseThrow(() -> new BadRequestException("Subcategory not found!"));
+        }
+        List<ResponseProductDTO> products = new ArrayList<>();
+        productDAO.filter(dto)
+                .forEach(id -> products.add(modelMapper.map(productRepository
+                        .findById(id)
+                        .orElseThrow(() -> new NotFoundException("Product not found!")) , ResponseProductDTO.class)));
+        return products;
     }
 }

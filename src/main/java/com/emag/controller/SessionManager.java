@@ -15,6 +15,7 @@ public class SessionManager {
 
     private static final String LOGGED_USER_ID = "logged_user_id";
     private static final String LOGGED_USER_REMOTE_ADDRESS = "logged_user_remote_address";
+//    TODO save last URL when accesing getProductsBySubcategory or searchProductsByKeyword
     private static final String SUBCATEGORY_ID = "subcategory_id";
 
     @Autowired
@@ -78,7 +79,10 @@ public class SessionManager {
 
     public long getSubcategoryId(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        validateSession(request);
+//        validateSession(request);
+        if (session.getAttribute(SUBCATEGORY_ID) == null){
+            throw new BadRequestException("No subcategory selected !");
+        }
         return (long) session.getAttribute(SUBCATEGORY_ID);
     }
 }

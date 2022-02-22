@@ -4,7 +4,7 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
- "name" : "Product 1214",
+ "name" : "Productche",
   "subCategoryId" : 2 ,
   "brand" : "so212" ,
   "model" : "212 31ode435312324l" ,
@@ -30,10 +30,10 @@ Content-Type: application/json
 }
 
 #################################################      GET PRODUCT BY ID        ######################################
-GET http://localhost:9999/products/2
+GET http://localhost:9999/products/1
 
 #################################################      DELETE PRODUCT BY ID        ###################################
-DELETE http://localhost:9999/products/3
+DELETE http://localhost:9999/products/16
 
 #################################################      ADD PRODUCT TO FAV        ###################################
 POST http://localhost:9999/products/2/fav
@@ -42,7 +42,7 @@ POST http://localhost:9999/products/2/fav
 DELETE http://localhost:9999/products/2/fav
 
 #####################################################      ADD DISCOUNT        ######################################
-POST http://localhost:9999/discounts/2
+POST http://localhost:9999/discounts/16
 Content-Type: application/json
 
 {
@@ -65,3 +65,21 @@ GET http://localhost:9999/products/fav
 
 ################################################   GET PRODUCT WHERE PRICE IS BETWEEN ######################################
 GET http://localhost:9999/subcategories/products/40/60
+
+################################################   FILTER   ######################################
+POST http://localhost:9999/products/filter
+Content-Type: application/json
+
+{
+    "subcategoryId" : 8 ,
+    "searchKeyword" : "product" ,
+    "brand" : "so" ,
+    "model" : "some" ,
+    "maxPrice" : 600 ,
+    "minPrice" : 200 ,
+    "discountedOnly" : false ,
+    "orderByPrice" : true ,
+    "sortDesc" : false ,
+    "productsPerPage" : 80 ,
+    "pageNumber" : 1
+}

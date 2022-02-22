@@ -1,16 +1,22 @@
 package com.emag.service;
 
+import com.emag.model.dao.ProductDAO;
 import com.emag.model.pojo.Product;
 import com.emag.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public abstract class AbstractService {
 
-    protected static final long MAX_SIZE_OF_IMAGE = 20*1000000;
+    protected static final long MAX_SIZE_OF_IMAGE = 9*1000000;
+
+
+    @Autowired
+    ProductDAO productDAO;
 
     @Autowired
     protected EmailServiceImpl emailService;

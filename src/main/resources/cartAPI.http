@@ -1,7 +1,7 @@
 
 
 ###################################      ADD PRODUCT TO CART     ##########################################
-POST localhost:9999/cart/1
+POST localhost:9999/cart/16
 
 ###################################      GET ALL PRODUCTS FOR USER    #####################################
 GET localhost:9999/cart

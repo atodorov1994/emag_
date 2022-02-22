@@ -12,6 +12,7 @@ public class EditUserRequestDTO {
     private String nickname;
     private String gender;
     private LocalDate birthDate;
+    private String email;
 
 
 }

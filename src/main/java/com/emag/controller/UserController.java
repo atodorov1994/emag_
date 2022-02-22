@@ -72,6 +72,14 @@ public class UserController {
         return userService.editUserPassword(id,dto);
     }
 
+    @Transactional
+    @PutMapping("/users/forgotten-pass")
+    public UserWithoutPasswordDTO forgottenPassword (@RequestBody @Valid ForgottenPassDTO dto, HttpServletRequest request){
+        sessionManager.isLoggedVerification(request.getSession());
+        return userService.forgottenPassword (dto);
+    }
+
+
 
     @PostMapping("/users/{id}/image")
     public String uploadImage(@RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request) {

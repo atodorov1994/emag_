@@ -1,6 +1,8 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
+import com.emag.model.dao.ProductDAO;
+import com.emag.model.dto.product.FilterProductsDTO;
 import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,9 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ProductDAO productDAO;
 
 
     @PostMapping("/products")
@@ -80,6 +86,22 @@ public class ProductController {
     public List<Product> getProductsBetween (@PathVariable double min, @PathVariable double max, HttpServletRequest request){
         return productService.getProductsBetween (sessionManager.getSubcategoryId(request), min, max);
     }
+
+//    @GetMapping("/products/filter")
+//        public List<ResponseProductDTO> filterProducts (HttpSession session , @PathParam("priceMin") int min ,
+//                                                        @PathParam("priceMax") int max ,
+//                                                        @PathParam("brand") String brand ,
+//                                                        @PathParam("rating") double rating ,
+//                                                        @PathParam("likes") int likes){
+//        return productDAO.filter(min , max , brand ,rating , likes);
+//    }
+
+    @PostMapping("/products/filter")
+    public List<ResponseProductDTO> filterProducts (@RequestBody FilterProductsDTO dto){
+        return productService.filterProducts(dto);
+    }
+
+
 
     @GetMapping("/products/search/{keywordSequence}")
     public List<ResponseProductDTO> searchProductsByKeyword(@PathVariable String keywordSequence){
