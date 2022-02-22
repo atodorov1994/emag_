@@ -2,16 +2,13 @@ package com.emag.controller;
 
 import com.emag.exception.AuthenticationException;
 import com.emag.exception.BadRequestException;
-import com.emag.model.pojo.SubCategory;
 import com.emag.model.pojo.User;
-import com.emag.model.repository.SubCategoryRepository;
 import com.emag.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @Component
 public class SessionManager {
@@ -19,9 +16,6 @@ public class SessionManager {
     private static final String LOGGED_USER_ID = "logged_user_id";
     private static final String LOGGED_USER_REMOTE_ADDRESS = "logged_user_remote_address";
     private static final String SUBCATEGORY_ID = "subcategory_id";
-
-    @Autowired
-    SubCategoryRepository subCategoryRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -79,18 +73,12 @@ public class SessionManager {
     }
 
     public void setSubcategoryId(HttpSession session , long id) {
-        session.setAttribute(SUBCATEGORY_ID ,  id);
+        session.setAttribute(SUBCATEGORY_ID , id);
     }
 
-    public SubCategory getSubcategory(HttpServletRequest request) {
-//        TODO debug GET SUBCATEGORY SORTED BY
+    public long getSubcategoryId(HttpServletRequest request) {
         HttpSession session = request.getSession();
         validateSession(request);
-        String s = (String) session.getAttribute(SUBCATEGORY_ID);
-        if (session.getAttribute(SUBCATEGORY_ID) == null){
-            throw new BadRequestException("No subcategory selected !");
-        }
-        return subCategoryRepository.findById(Long.valueOf(s))
-                .orElseThrow(() -> new BadRequestException("Must select subcategory first!"));
+        return (long) session.getAttribute(SUBCATEGORY_ID);
     }
 }

@@ -6,9 +6,16 @@ import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
+import com.emag.model.pojo.ProductImage;
 import com.emag.model.pojo.SubCategory;
 import com.emag.model.pojo.User;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -128,10 +135,9 @@ public class ProductService extends AbstractService{
         return likedProductsDTO;
     }
 
-    public List<ResponseProductDTO> getProductsBySubcategorySortedBy(SubCategory subCategory, String sortedBy) {
-        if(subCategory == null) {
-            throw new NotFoundException("Subcategory not found!");
-        }
+    public List<ResponseProductDTO> getProductsBySubcategorySortedBy(long subcategoryId, String sortedBy) {
+        SubCategory subCategory = subCategoryRepository.findById(subcategoryId)
+                .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
         if (!Arrays.asList(SORTED_BY).contains(sortedBy.toLowerCase())){
             throw new BadRequestException("Invalid sorting type");
         }
@@ -162,14 +168,9 @@ public class ProductService extends AbstractService{
         }
     }
 
-<<<<<<< HEAD
-    public List<Product> getProductsBetween(SubCategory subCategory, double min, double max) {
-        return productRepository.findAllBySubCategoryAndPriceIsBetween(subCategory, min, max);
-=======
     public List<Product> getProductsBetween(long subcategoryId, double min, double max) {
         return productRepository.findAllBySubCategoryIdAndPriceIsBetween(subcategoryId, min, max);
     }
-<<<<<<< HEAD
 
     @SneakyThrows
     public String addImage(MultipartFile file, long id) {
@@ -190,8 +191,5 @@ public class ProductService extends AbstractService{
         productImage.setProduct(p);
         productImageRepository.save(productImage);
         return name;
->>>>>>> refs/remotes/origin/main
     }
-=======
->>>>>>> parent of ed1912d (Product images(unchecked if work), emails working, and fixed some things)
 }

@@ -1,5 +1,6 @@
 package com.emag.service;
 
+import com.emag.controller.UserController;
 import com.emag.exception.BadRequestException;
 import com.emag.exception.NotFoundException;
 import com.emag.exception.UnauthorizedException;
@@ -11,11 +12,15 @@ import com.emag.model.pojo.Address;
 import com.emag.model.pojo.User;
 import com.emag.util.UserUtility;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -140,6 +145,9 @@ public class UserService extends AbstractService {
 
     @SneakyThrows
     public String uploadImage(MultipartFile file, long id) {
+        if (file.getBytes().length>MAX_SIZE_OF_IMAGE){
+            throw new BadRequestException("Image is too large");
+        }
         String[] strings = file.getOriginalFilename().split("\\.");
         String extension = strings[strings.length-1];
         if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
@@ -169,4 +177,6 @@ public class UserService extends AbstractService {
         user.setSubscribed(false);
         return modelMapper.map(userRepository.save(user) , UserWithoutPasswordDTO.class);
     }
+
+
 }

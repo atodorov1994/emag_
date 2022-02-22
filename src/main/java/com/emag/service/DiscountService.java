@@ -28,22 +28,10 @@ public class DiscountService extends AbstractService{
         double price = product.getPrice();
         double discountedPrice = price - price*discountPercent/100;
         product.setDiscount(discount);
-<<<<<<< HEAD
-<<<<<<< HEAD
-        product.setPrice(discountedPrice);
-        List<User> users = userRepository.findAllBySubscribedIsTrue();
-        String mailText = product.getName()+ " is only now with "+discount.getDiscountPercent()+" down of the price. Hurry up!";
-=======
         product.setDiscountedPrice(discountedPrice);
         List<User> users = userRepository.findAllBySubscribedIsTrue();
         String mailText = product.getName()+ " is only now with "+discount.getDiscountPercent()+"% down of the price. " +
                 "Hurry up!" + " http://localhost:9999/products/"+product.getId();
->>>>>>> refs/remotes/origin/main
-=======
-        product.setPrice(discountedPrice);
-        List<User> users = userRepository.findAllBySubscribedIsTrue();
-        String mailText = product.getName()+ " is only now with "+discount.getDiscountPercent()+" down of the price. Hurry up!";
->>>>>>> parent of ed1912d (Product images(unchecked if work), emails working, and fixed some things)
         users.forEach(user -> emailService.sendSimpleMessage(user.getEmail(), "New discount in town", mailText));
         return discountRepository.save(discount);
     }

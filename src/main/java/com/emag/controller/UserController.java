@@ -4,7 +4,6 @@ import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
 import com.emag.model.dto.register.RegisterResponseUserDTO;
 import com.emag.model.dto.user.*;
-import com.emag.model.pojo.User;
 import com.emag.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.io.IOException;
 
 @RestController
 public class UserController {
@@ -90,9 +88,6 @@ public class UserController {
     public UserWithoutPasswordDTO unsubscribe(HttpServletRequest request){
         return userService.unsubscribe(sessionManager.getLoggedUser(request));
     }
-
-
-
 
 
 
