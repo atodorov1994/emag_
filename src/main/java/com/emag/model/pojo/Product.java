@@ -34,11 +34,9 @@ public class Product {
     private String brand;
     private String model;
     private double price;
-    private Double discountedPrice;
     private String description;
     private int quantity;
     private int warrantyMonths;
-    private double productRating;
     private Timestamp addedAt;
     private Timestamp deletedAt;
 //    TODO not working in find all products by subcat

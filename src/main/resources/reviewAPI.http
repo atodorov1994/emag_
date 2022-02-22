@@ -4,10 +4,10 @@ POST localhost:9999/review
 Content-Type: application/json
 
 {
-  "productId": 6,
+  "productId": 1,
   "title" : "neshtoo",
   "description" : "pak neshtoo",
-  "rating" : 4
+  "rating" : 3
 }
 
 

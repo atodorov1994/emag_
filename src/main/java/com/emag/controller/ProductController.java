@@ -1,18 +1,20 @@
 package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
+import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
+import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;
 import com.emag.model.pojo.Product;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -50,7 +52,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ResponseProductDTO> getProductById (@PathVariable long id){
+    public ResponseEntity<ResponseProductDTO> getProductById (@PathVariable long id , HttpServletRequest request){
+        if(!sessionManager.userHasPrivileges(request)){
+            throw new UnauthorizedException("Not admin!");
+        }
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
@@ -101,12 +106,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllFavouriteProducts(sessionManager.getLoggedUser(request)));
     }
 
-    @PostMapping("/products/{id}/image")
-    public String addImage(@RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request) {
-        if(!sessionManager.userHasPrivileges(request)){
-            throw new UnauthorizedException("Not admin!");
-        }
-        return productService.addImage(file,id);
-    }
+
+
+
+
+
+
+
 
 }
