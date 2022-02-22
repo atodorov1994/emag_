@@ -6,9 +6,16 @@ import com.emag.model.dto.product.LikedProductsForUserDTO;
 import com.emag.model.dto.product.RequestProductDTO;
 import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
+import com.emag.model.pojo.ProductImage;
 import com.emag.model.pojo.SubCategory;
 import com.emag.model.pojo.User;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -162,7 +169,33 @@ public class ProductService extends AbstractService{
         }
     }
 
+<<<<<<< HEAD
     public List<Product> getProductsBetween(SubCategory subCategory, double min, double max) {
         return productRepository.findAllBySubCategoryAndPriceIsBetween(subCategory, min, max);
+=======
+    public List<Product> getProductsBetween(long subcategoryId, double min, double max) {
+        return productRepository.findAllBySubCategoryIdAndPriceIsBetween(subcategoryId, min, max);
+    }
+
+    @SneakyThrows
+    public String addImage(MultipartFile file, long id) {
+        if (file.getBytes().length>MAX_SIZE_OF_IMAGE){
+            throw new BadRequestException("Image is too large");
+        }
+        String[] strings = file.getOriginalFilename().split("\\.");
+        String extension = strings[strings.length-1];
+        if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
+            throw new BadRequestException("Unsupported file format !");
+        }
+        String name = System.nanoTime() + "." + extension;
+        Files.copy(file.getInputStream() ,
+                new File("products" + File.separator + "uploads" + File.separator + name).toPath() , StandardCopyOption.REPLACE_EXISTING);
+        Product p = productRepository.getById(id);
+        ProductImage productImage = new ProductImage();
+        productImage.setUrl(name);
+        productImage.setProduct(p);
+        productImageRepository.save(productImage);
+        return name;
+>>>>>>> refs/remotes/origin/main
     }
 }

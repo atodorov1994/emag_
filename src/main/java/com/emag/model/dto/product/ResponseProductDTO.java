@@ -21,12 +21,13 @@ public class ResponseProductDTO {
     private String brand;
     private String model;
     private double price;
+    private double discountedPrice;
     private String description;
     private int quantity;
     private int warrantyMonths;
     private Timestamp addedAt;
     private Timestamp deletedAt;
-//    private double productRating;
+    private double productRating;
     private Discount discount;
 
 }

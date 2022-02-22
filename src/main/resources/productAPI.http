@@ -4,13 +4,21 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
+<<<<<<< HEAD
  "name" : "Product 21",
   "subCategoryId" : 1 ,
   "brand" : "so" ,
   "model" : "some 31odel" ,
   "price" : 1436.00,
+=======
+ "name" : "Product 1214",
+  "subCategoryId" : 2 ,
+  "brand" : "so212" ,
+  "model" : "212 31ode435312324l" ,
+  "price" : 2123.00,
+>>>>>>> refs/remotes/origin/main
   "quantity" : 2,
-  "description" : "So321e stupid product",
+  "description" : "So321e 15125 product",
   "warrantyMonths" : 15
 }
 
@@ -30,7 +38,7 @@ Content-Type: application/json
 }
 
 #################################################      GET PRODUCT BY ID        ######################################
-GET http://localhost:9999/products/4
+GET http://localhost:9999/products/2
 
 #################################################      DELETE PRODUCT BY ID        ###################################
 DELETE http://localhost:9999/products/3
@@ -47,7 +55,11 @@ Content-Type: application/json
 
 {
   "discountPercent" : 25,
+<<<<<<< HEAD
   "startDate" : "2022-02-21T01:00:00.000+00:00",
+=======
+  "startDate" : "2022-03-21T00:00:00.000+00:00",
+>>>>>>> refs/remotes/origin/main
   "expireDate" : "2022-04-28T00:00:00.000+00:00"
 }
 
@@ -58,7 +70,7 @@ GET http://localhost:9999/subcategories/2/products
 GET http://localhost:9999/subcategories/products/price_desc
 
 ###########################################      SEARCH PRODUCTS BY KEYWORD        #############################
-GET http://localhost:9999/products/search/some
+GET http://localhost:9999/products/search/prod
 
 ###########################################      GET ALL FAVOURITE PRODUCTS        #############################
 GET http://localhost:9999/products/fav
