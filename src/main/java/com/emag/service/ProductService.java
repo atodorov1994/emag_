@@ -183,13 +183,14 @@ public class ProductService extends AbstractService{
             throw new BadRequestException("Unsupported file format !");
         }
         String name = System.nanoTime() + "." + extension;
+        File f = new File("products" + File.separator + "uploads" + File.separator + name);
         Files.copy(file.getInputStream() ,
-                new File("products" + File.separator + "uploads" + File.separator + name).toPath() , StandardCopyOption.REPLACE_EXISTING);
+                f.toPath(), StandardCopyOption.REPLACE_EXISTING);
         Product p = productRepository.getById(id);
         ProductImage productImage = new ProductImage();
-        productImage.setUrl(name);
+        productImage.setUrl(f.toPath().toString());
         productImage.setProduct(p);
         productImageRepository.save(productImage);
-        return name;
+        return f.toPath().toString();
     }
 }

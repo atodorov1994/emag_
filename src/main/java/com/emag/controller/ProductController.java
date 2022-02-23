@@ -86,7 +86,8 @@ public class ProductController {
         return productService.searchProductsByKeyword(keywordSequence);
     }
 
-    @GetMapping("/products/fav")  ResponseEntity<List<ResponseProductDTO>> getAllFavouriteProducts(HttpServletRequest request){
+    @GetMapping("/products/fav")
+    ResponseEntity<List<ResponseProductDTO>> getAllFavouriteProducts(HttpServletRequest request){
 //        TODO refactor
         if (!sessionManager.userHasPrivileges(request , sessionManager.getLoggedUser(request).getId())){
             throw new UnauthorizedException("No privileges!");
