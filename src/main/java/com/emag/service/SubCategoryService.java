@@ -54,7 +54,7 @@ public class SubCategoryService extends AbstractService{
         return subCategoryRepository.save(subCategory);
     }
 
-    public List<SubCategoriesWithNameDTO> getSubCategoriesFromCategory(CategoryWithoutIdDTO c) {
+    public List<SubCategoriesWithNameDTO> getSubCategoriesFromCategory(long id) {
         List<SubCategoriesWithNameDTO> categoriesWithNameDTOS = new ArrayList<>();
         List<SubCategory> subCategories = subCategoryRepository.findAll();
         subCategories.forEach(subCategory -> categoriesWithNameDTOS.add(modelMapper.map(subCategory, SubCategoriesWithNameDTO.class)));

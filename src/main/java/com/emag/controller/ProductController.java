@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +32,7 @@ public class ProductController {
 
 
     @PostMapping("/products")
-    public ResponseEntity<ResponseProductDTO> addProduct(@RequestBody RequestProductDTO p , HttpServletRequest request){
+    public ResponseEntity<ResponseProductDTO> addProduct(@Valid @RequestBody RequestProductDTO p , HttpServletRequest request){
         if(!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("Not admin!");
         }

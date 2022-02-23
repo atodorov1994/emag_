@@ -39,9 +39,9 @@ public class SubCategoryController {
         return ResponseEntity.ok(subCategoryService.editCategory(c));
     }
 
-    @GetMapping("/subcategories")
-    public List<SubCategoriesWithNameDTO> getSubCategoriesFromCategory(@RequestBody @Valid CategoryWithoutIdDTO c){
-        return subCategoryService.getSubCategoriesFromCategory(c);
+    @GetMapping("/subcategories/{id}")
+    public List<SubCategoriesWithNameDTO> getSubCategoriesFromCategory(@PathVariable long id){
+        return subCategoryService.getSubCategoriesFromCategory(id);
     }
 
     @DeleteMapping("/subcategories")
