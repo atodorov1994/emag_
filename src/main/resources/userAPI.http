@@ -7,19 +7,11 @@ POST localhost:9999/users
 Content-Type: application/json
 
 {
-<<<<<<< HEAD
-  "fullName" : "mnbnm vhvh" ,
-  "password" : "15186994aT!" ,
-  "confirmPassword" : "15186994aT!" ,
-  "admin" : false ,
-  "email" : "vvhvhh.m17777@gmail.com"
-=======
   "fullName" : "Aleksandar Todorov" ,
   "password" : "123456789ABCdef!" ,
   "confirmPassword" : "123456789ABCdef!" ,
   "admin" : true ,
   "email" : "attodorov@yahoo.com"
->>>>>>> refs/remotes/origin/main
 }
 
 
