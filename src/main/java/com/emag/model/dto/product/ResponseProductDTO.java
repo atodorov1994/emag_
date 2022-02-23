@@ -1,9 +1,6 @@
 package com.emag.model.dto.product;
 
-import com.emag.model.pojo.Discount;
-import com.emag.model.pojo.Review;
-import com.emag.model.pojo.SubCategory;
-import com.emag.model.pojo.User;
+import com.emag.model.pojo.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -29,5 +26,7 @@ public class ResponseProductDTO {
     private Timestamp deletedAt;
     private double productRating;
     private Discount discount;
+    private List<ProductImage> productImages;
+
 
 }

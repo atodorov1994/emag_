@@ -65,6 +65,10 @@ public class Product {
     @JsonBackReference
     private List<OrderedProduct> orderedProducts;
 
+    @OneToMany(mappedBy = "product")
+    @JsonBackReference
+    List<ProductImage> productImages;
+
 
 
 
