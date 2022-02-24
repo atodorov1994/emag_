@@ -1,13 +1,9 @@
 package com.emag.service;
 
 import com.emag.model.dao.ProductDAO;
-import com.emag.model.pojo.Product;
 import com.emag.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public abstract class AbstractService {
@@ -19,7 +15,7 @@ public abstract class AbstractService {
     ProductDAO productDAO;
 
     @Autowired
-    protected EmailServiceImpl emailService;
+    protected EmailService emailService;
 
     @Autowired
     protected UserRepository userRepository;

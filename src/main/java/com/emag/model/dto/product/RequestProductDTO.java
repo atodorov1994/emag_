@@ -4,6 +4,7 @@ import com.emag.model.pojo.SubCategory;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -17,10 +18,12 @@ public class RequestProductDTO {
     private String brand;
     @NotNull(message = "Product model is mandatory!")
     private String model;
-    @NotNull(message = "Product price is mandatory!")
+//    @NotNull(message = "Product price is mandatory!")
+    @Min(1)
     private double price;
     @NotNull(message = "Product quantity is mandatory!")
     private int quantity;
+
 
     private String description;
     private int warrantyMonths;

@@ -4,13 +4,13 @@ POST http://localhost:9999/products
 Content-Type: application/json
 
 {
- "name" : "Proddasuctche",
+ "name" : "sdfgdgf",
   "subCategoryId" : 2 ,
   "brand" : "so212" ,
   "model" : "212 31ode43dd5312324l" ,
-  "price" : -213.00,
+  "price" : null,
   "quantity" : 2,
-  "description" : "So321e 15125 product",
+  "description" : "Sods321e 15125 product",
   "warrantyMonths" : 15
 }
 

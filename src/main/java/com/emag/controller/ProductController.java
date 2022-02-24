@@ -1,5 +1,6 @@
 package com.emag.controller;
 
+import com.emag.exception.BadRequestException;
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dao.ProductDAO;
 import com.emag.model.dto.product.FilterProductsDTO;
@@ -10,6 +11,7 @@ import com.emag.model.pojo.Product;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class ProductController {
@@ -32,7 +35,10 @@ public class ProductController {
 
 
     @PostMapping("/products")
-    public ResponseEntity<ResponseProductDTO> addProduct(@Valid @RequestBody RequestProductDTO p , HttpServletRequest request){
+    public ResponseEntity<ResponseProductDTO> addProduct(@Valid @RequestBody RequestProductDTO p, BindingResult bindingResult, HttpServletRequest request){
+        if (bindingResult.hasErrors()){
+            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+        }
         if(!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("Not admin!");
         }

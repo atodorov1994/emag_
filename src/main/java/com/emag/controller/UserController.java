@@ -1,5 +1,6 @@
 package com.emag.controller;
 
+import com.emag.exception.BadRequestException;
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.register.RegisterRequestUserDTO;
 import com.emag.model.dto.register.RegisterResponseUserDTO;
@@ -7,6 +8,7 @@ import com.emag.model.dto.user.*;
 import com.emag.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -82,7 +87,10 @@ public class UserController {
 
 
     @PostMapping("/users/{id}/image")
-    public String uploadImage(@RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request) {
+    public String uploadImage(@Valid @RequestPart @Max(10*1000000) MultipartFile file, BindingResult bindingResult, @PathVariable long id, HttpServletRequest request) {
+        if (bindingResult.hasErrors()){
+            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+        }
         sessionManager.userHasPrivileges(request, id);
         return userService.uploadImage(file,id);
     }
