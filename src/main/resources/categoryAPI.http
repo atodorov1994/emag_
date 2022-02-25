@@ -4,7 +4,7 @@ POST localhost:9999/categories
 Content-Type: application/json
 
 {
-  "name": "Category 9"
+  "name": "AA"
 }
 
 
@@ -13,8 +13,8 @@ PUT localhost:9999/categories
 Content-Type: application/json
 
 {
-  "oldName": "CD",
-  "newName": "Television"
+  "oldName": "DVDs",
+  "newName": "DVD"
 }
 
 ##############################################      FIND ALL  CATEGORIES    ##########################################

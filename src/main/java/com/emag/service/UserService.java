@@ -10,6 +10,7 @@ import com.emag.model.dto.register.RegisterResponseUserDTO;
 import com.emag.model.dto.user.*;
 import com.emag.model.pojo.Address;
 import com.emag.model.pojo.User;
+import com.emag.util.ImageUtil;
 import com.emag.util.UserUtility;
 import lombok.SneakyThrows;
 import org.passay.CharacterData;
@@ -163,15 +164,7 @@ public class UserService extends AbstractService {
 
     @SneakyThrows
     public String uploadImage(MultipartFile file, long id) {
-        if (file.getBytes().length>MAX_SIZE_OF_IMAGE){
-            throw new BadRequestException("Image is too large");
-        }
-        String[] strings = file.getOriginalFilename().split("\\.");
-        String extension = strings[strings.length-1];
-        if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
-            throw new BadRequestException("Unsupported file format !");
-        }
-        String name = System.nanoTime() + "." + extension;
+        String name = ImageUtil.validateImageAndReturnName(file);
         File f = new File("user" + File.separator + "uploads" + File.separator + name);
         Files.copy(file.getInputStream() ,
                 f.toPath() , StandardCopyOption.REPLACE_EXISTING);

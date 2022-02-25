@@ -2,7 +2,6 @@ package com.emag.controller;
 
 import com.emag.exception.UnauthorizedException;
 import com.emag.model.dto.category.EditCategoryDTO;
-import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import com.emag.model.dto.subcategory.AddSubCategoryDTO;
 import com.emag.model.dto.subcategory.SubCategoriesWithNameDTO;
 import com.emag.model.pojo.SubCategory;
@@ -36,7 +35,7 @@ public class SubCategoryController {
         if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }
-        return ResponseEntity.ok(subCategoryService.editCategory(c));
+        return ResponseEntity.ok(subCategoryService.editSubCategory(c));
     }
 
     @GetMapping("/subcategories/{id}")

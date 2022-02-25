@@ -7,6 +7,7 @@ import com.emag.model.dto.review.ReviewDTO;
 import com.emag.model.pojo.Product;
 import com.emag.model.pojo.Review;
 import com.emag.model.pojo.User;
+import com.emag.util.ReviewUtil;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,17 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//TODO refactor DTO make product id to path variable
-
 @Service
 public class ReviewService extends AbstractService{
-    public ReviewDTO addReview(DoReviewDTO r, long userId) {
-        Product product = productRepository.findById(r.getProductId()).orElseThrow(() -> new NotFoundException("Product with this id doesn't exist"));
+
+    public ReviewDTO addReview(DoReviewDTO r, long productId,long userId) {
+        ReviewUtil.validateReview(r);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product with this id doesn't exist"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with this id doesn't exist"));
         if (reviewRepository.findReviewByReviewerAndProduct(user, product) != null){
             throw new BadRequestException("You have already reviewed this product");
         }
-
         Review review = modelMapper.map(r, Review.class);
         review.setId(0);
         review.setReviewer(user);
@@ -44,8 +44,9 @@ public class ReviewService extends AbstractService{
         return modelMapper.map(review, ReviewDTO.class);
     }
 
-    public ReviewDTO editReview(DoReviewDTO r, long userId) {
-        Product product = productRepository.findById(r.getProductId()).orElseThrow(() -> new NotFoundException("Product with this id doesn't exist"));
+    public ReviewDTO editReview(DoReviewDTO r, long productId, long userId) {
+        ReviewUtil.validateReview(r);
+        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product with this id doesn't exist"));
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User with this id doesn't exist"));
         Review review = reviewRepository.findReviewByReviewerAndProduct(user, product);
         if (review == null){

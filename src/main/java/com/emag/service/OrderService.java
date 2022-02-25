@@ -46,7 +46,6 @@ public class OrderService extends AbstractService{
             productsQuantities.put(product , orderedQuantity );
             product.setQuantity(product.getQuantity() - orderedQuantity);
 
-
             orderedProductRepository.save(new OrderedProduct(primaryKey , order , product , orderedQuantity));
             if (product.getQuantity() <= 0){
                 product.setDeletedAt(Timestamp.valueOf(LocalDateTime.now()));

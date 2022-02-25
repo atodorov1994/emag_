@@ -4,6 +4,7 @@ package com.emag.service;
 import com.emag.exception.BadRequestException;
 import com.emag.model.dto.category.EditCategoryDTO;
 import com.emag.model.pojo.Category;
+import com.emag.util.CategoryUtil;
 import org.springframework.stereotype.Service;
 import com.emag.model.dto.category.CategoryWithoutIdDTO;
 import java.util.ArrayList;
@@ -14,13 +15,7 @@ public class CategoryService extends AbstractService {
 
 
     public Category addCategory(CategoryWithoutIdDTO c) {
-        String name = c.getName();
-        if (name.trim().length()<=1){
-            throw new BadRequestException("Wrong credentials!");
-        }
-        if (categoryRepository.findByCategoryName(name) != null){
-            throw new BadRequestException("Category already exists!");
-        }
+        CategoryUtil.validateName(c.getName(), categoryRepository);
         Category category = modelMapper.map(c,Category.class);
         return categoryRepository.save(category);
     }
@@ -29,15 +24,8 @@ public class CategoryService extends AbstractService {
     public Category editCategory(EditCategoryDTO c) {
         String oldName = c.getOldName();
         String newName = c.getNewName();
-        if (categoryRepository.findByCategoryName(oldName) == null){
-            throw new BadRequestException("The category you try to change don't exists!");
-        }
-        if (newName.trim().length()<=1){
-            throw new BadRequestException("Wrong credentials!");
-        }
-        if (categoryRepository.findByCategoryName(newName) != null){
-            throw new BadRequestException("Category already exists!");
-        }
+        CategoryUtil.validateNameExists(oldName, categoryRepository);
+        CategoryUtil.validateName(newName, categoryRepository);
         Category category = categoryRepository.findByCategoryName(oldName);
         category.setCategoryName(newName);
         return categoryRepository.save(category);
@@ -46,15 +34,14 @@ public class CategoryService extends AbstractService {
     public List<CategoryWithoutIdDTO> getAllCategories() {
         List<CategoryWithoutIdDTO> categoriesWithoutId = new ArrayList<>();
         List<Category> categories = categoryRepository.findAll();
-        categories.forEach(category -> categoriesWithoutId.add(modelMapper.map(category, CategoryWithoutIdDTO.class)));
+        categories.forEach(category ->
+                categoriesWithoutId.add(modelMapper.map(category, CategoryWithoutIdDTO.class)));
         return categoriesWithoutId;
     }
 
     public CategoryWithoutIdDTO deleteCategory(CategoryWithoutIdDTO categoryWithoutId) {
         String categoryName = categoryWithoutId.getName();
-        if (categoryRepository.findByCategoryName(categoryName) == null){
-            throw new BadRequestException("No such category!");
-        }
+        CategoryUtil.validateNameExists(categoryName, categoryRepository);
         Category category = categoryRepository.findByCategoryName(categoryName);
         categoryRepository.delete(category);
         return categoryWithoutId;

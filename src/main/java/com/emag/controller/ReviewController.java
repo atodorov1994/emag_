@@ -25,14 +25,14 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @PostMapping("/review")
-    public ResponseEntity<ReviewDTO> addReview (@RequestBody @Valid DoReviewDTO r, HttpServletRequest request){
-        return ResponseEntity.ok(reviewService.addReview(r, sessionManager.getLoggedUser(request).getId()));
+    @PostMapping("/review/{id}")
+    public ResponseEntity<ReviewDTO> addReview (@RequestBody @Valid DoReviewDTO r, @PathVariable long id, HttpServletRequest request){
+        return ResponseEntity.ok(reviewService.addReview(r, id,sessionManager.getLoggedUser(request).getId()));
     }
 
-    @PutMapping("/review")
-    public ResponseEntity<ReviewDTO> editReview (@RequestBody @Valid DoReviewDTO r, HttpServletRequest request){
-        return ResponseEntity.ok(reviewService.editReview(r, sessionManager.getLoggedUser(request).getId()));
+    @PutMapping("/review/{id}")
+    public ResponseEntity<ReviewDTO> editReview (@RequestBody @Valid DoReviewDTO r, @PathVariable long id, HttpServletRequest request){
+        return ResponseEntity.ok(reviewService.editReview(r, id,sessionManager.getLoggedUser(request).getId()));
     }
 
     @GetMapping("/product/{id}/reviews")

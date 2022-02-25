@@ -9,8 +9,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-//TODO add rating for product and calculate it every time when make review
-
 @Component
 @Entity
 @Table(name = "products")
@@ -41,8 +39,6 @@ public class Product {
     private double productRating;
     private Timestamp addedAt;
     private Timestamp deletedAt;
-//    TODO not working in find all products by subcat
-//    private double productRating;
 
     @ManyToOne
     @JsonManagedReference

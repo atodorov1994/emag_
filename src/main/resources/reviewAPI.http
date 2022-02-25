@@ -31,7 +31,7 @@ DELETE localhost:9999/review/1
 Content-Type: application/json
 
 ##############################################      GET ALL REVIEWS BY USER   ##########################################
-GET localhost:9999/users/1/review
+GET localhost:9999/users/5/review
 Content-Type: application/json
 
 ##############################################      LIKE REVIEW   ##########################################

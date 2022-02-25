@@ -1,18 +1,21 @@
 package com.emag.service;
 
+import com.emag.exception.BadRequestException;
 import com.emag.model.dao.ProductDAO;
 import com.emag.model.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Arrays;
 
 public abstract class AbstractService {
 
-    protected static final long MAX_SIZE_OF_IMAGE = 9*1000000;
-
+    protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "reviews" , "added_desc" };
 
     @Autowired
-    ProductDAO productDAO;
+    protected ProductDAO productDAO;
 
     @Autowired
     protected EmailService emailService;
@@ -43,12 +46,9 @@ public abstract class AbstractService {
 
     @Autowired
     protected ReviewRepository reviewRepository;
-//
+
     @Autowired
     protected SubCategoryRepository subCategoryRepository;
-//
-//    @Autowired
-//    protected UserImageRepository userImageRepository;
 
     @Autowired
     protected CartRepository cartRepository;
@@ -59,8 +59,5 @@ public abstract class AbstractService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-    protected static final String[] ACCEPTED_IMAGE_FORMATS = {"jpeg" , "png" , "jpg"};
-    protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "reviews" , "added_desc" };
 
 }

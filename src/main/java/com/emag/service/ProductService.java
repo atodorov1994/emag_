@@ -10,6 +10,8 @@ import com.emag.model.pojo.Product;
 import com.emag.model.pojo.ProductImage;
 import com.emag.model.pojo.SubCategory;
 import com.emag.model.pojo.User;
+import com.emag.util.ImageUtil;
+import com.emag.util.ProductUtil;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,14 @@ public class ProductService extends AbstractService{
     public ResponseProductDTO addProduct(RequestProductDTO p){
         SubCategory subCategory = subCategoryRepository.findById( p.getSubCategoryId())
                 .orElseThrow(() -> new NotFoundException("No such subcategory !"));
+        ProductUtil.validateString(p.getName());
+        ProductUtil.validateString(p.getBrand());
+        ProductUtil.validateString(p.getModel());
+        ProductUtil.validateDescription(p.getDescription());
+        ProductUtil.validateInt((int) p.getSubCategoryId());
+        ProductUtil.validateInt(p.getQuantity());
+        ProductUtil.validateInt(p.getWarrantyMonths());
+        ProductUtil.validateDouble(p.getPrice());
 //        TODO not working with model mapper
 //        Product product = modelMapper.map(p , Product.class);
 //        product.setSubCategory(subCategory);
@@ -39,7 +49,6 @@ public class ProductService extends AbstractService{
         product.setName(p.getName());
         product.setQuantity(p.getQuantity());
         product.setSubCategory(subCategory);
-        //TODO validations
         product.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
         return modelMapper.map(productRepository.save(product) , ResponseProductDTO.class);
     }
@@ -47,17 +56,46 @@ public class ProductService extends AbstractService{
     public ResponseProductDTO editProduct(RequestProductDTO p, long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product does not exist!"));
+        String name = p.getName();
+        if (!name.isBlank()){
+            ProductUtil.validateString(name);
+            product.setName(name);
+        }
+        long subCategoryId = p.getSubCategoryId();
+        if (subCategoryId !=0 && product.getSubCategory().getId() != subCategoryId){
+            product.setSubCategory(subCategoryRepository.findById(subCategoryId)
+                    .orElseThrow(() -> new BadRequestException("No such subcategory")));
+        }
         String brand = p.getBrand();
         if (!brand.isBlank()){
+            ProductUtil.validateString(brand);
             product.setBrand(brand);
+        }
+        String model = p.getModel();
+        if (!model.isBlank()){
+            ProductUtil.validateString(model);
+            product.setModel(model);
         }
         String description = p.getDescription();
         if (!description.isBlank()) {
+            ProductUtil.validateDescription(description);
             product.setDescription(description);
         }
-//        TODO all parameters
-
-
+        int quantity = p.getQuantity();
+        if (quantity>0){
+            ProductUtil.validateInt(quantity);
+            product.setQuantity(quantity);
+        }
+        int warrantyMonths = p.getWarrantyMonths();
+        if (warrantyMonths>0){
+            ProductUtil.validateInt(warrantyMonths);
+            product.setWarrantyMonths(warrantyMonths);
+        }
+        double price = p.getPrice();
+        if (price>0){
+            ProductUtil.validateDouble(price);
+            product.setPrice(price);
+        }
         return modelMapper.map(productRepository.save(product) , ResponseProductDTO.class);
     }
 
@@ -72,8 +110,6 @@ public class ProductService extends AbstractService{
     public ResponseProductDTO getProductById(long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product does not exist"));
-//        TODO some validations
-
         return modelMapper.map(product , ResponseProductDTO.class);
     }
 
@@ -109,7 +145,8 @@ public class ProductService extends AbstractService{
                 .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
         List<Product> products = productRepository.getProductsBySubCategory(subCategory);
         List<ResponseProductDTO> responseProductDTOS = new ArrayList<>();
-        products.forEach(product -> responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
+        products.forEach(product ->
+                responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
         return responseProductDTOS;
     }
 
@@ -126,14 +163,16 @@ public class ProductService extends AbstractService{
             throw new NotFoundException("No products found");
         }
         List<ResponseProductDTO> foundProductsDTOs = new ArrayList<>();
-        foundProducts.forEach(product -> foundProductsDTOs.add(modelMapper.map(product , ResponseProductDTO.class)));
+        foundProducts.forEach(product ->
+                foundProductsDTOs.add(modelMapper.map(product , ResponseProductDTO.class)));
         return foundProductsDTOs;
     }
 
     public List<ResponseProductDTO> getAllFavouriteProducts(User user) {
         List<Product> likedProducts = user.getLikedProducts();
         List<ResponseProductDTO> likedProductsDTO = new ArrayList<>();
-        likedProducts.forEach(product -> likedProductsDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
+        likedProducts.forEach(product ->
+                likedProductsDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
         return likedProductsDTO;
     }
 
@@ -157,10 +196,9 @@ public class ProductService extends AbstractService{
                 productDTO.sort((o1, o2) -> Double.compare(o2.getPrice(), o1.getPrice()));
                 return productDTO;
             }
-//               TODO add by review count
-//               case  "reviews" -> {
-//                productDTO.sort((o1, o2) -> o1.get);
-//               }
+            case  "rating" : {
+                productDTO.sort((o1, o2) -> Double.compare(o2.getProductRating(), o1.getProductRating()));
+            }
             case "added_desc" : {
                 productDTO.sort(Comparator.comparing(ResponseProductDTO::getAddedAt));
                 return productDTO;
@@ -176,15 +214,7 @@ public class ProductService extends AbstractService{
 
     @SneakyThrows
     public String addImage(MultipartFile file, long id) {
-        if (file.getBytes().length>MAX_SIZE_OF_IMAGE){
-            throw new BadRequestException("Image is too large");
-        }
-        String[] strings = file.getOriginalFilename().split("\\.");
-        String extension = strings[strings.length-1];
-        if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
-            throw new BadRequestException("Unsupported file format !");
-        }
-        String name = System.nanoTime() + "." + extension;
+        String name = ImageUtil.validateImageAndReturnName(file);
         File f = new File("products" + File.separator + "uploads" + File.separator + name);
         Files.copy(file.getInputStream() ,
                 f.toPath(), StandardCopyOption.REPLACE_EXISTING);
