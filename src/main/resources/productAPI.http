@@ -71,10 +71,24 @@ POST http://localhost:9999/products/filter
 Content-Type: application/json
 
 {
+  "subcategoryId" : 2 ,
+  "searchKeyword" : "product" ,
+  "brand" : "so",
+  "model" : "some",
+  "maxPrice" : 400000 ,
+  "minPrice" : 200 ,
+  "discountedOnly" : false ,
+  "orderByPrice" : false ,
+  "sortDesc" : true ,
+  "productsPerPage" : 80 ,
+  "pageNumber" : 1
+}
+###
+
     "subcategoryId" : 8 ,
     "searchKeyword" : "product" ,
-    "brand" : "so" ,
-    "model" : "some" ,
+"brand" : "so212",
+  "model" : "some",
     "maxPrice" : 600 ,
     "minPrice" : 200 ,
     "discountedOnly" : false ,
@@ -82,4 +96,3 @@ Content-Type: application/json
     "sortDesc" : false ,
     "productsPerPage" : 80 ,
     "pageNumber" : 1
-}

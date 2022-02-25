@@ -102,26 +102,4 @@ public class UserController {
     public UserWithoutPasswordDTO unsubscribe(HttpServletRequest request){
         return userService.unsubscribe(sessionManager.getLoggedUser(request));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/users")
-//    public List<User> getAll(){
-//        return userRepository.findAll();
-//    }
-//
-
-
 }

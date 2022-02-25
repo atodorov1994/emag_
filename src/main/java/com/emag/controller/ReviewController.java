@@ -31,7 +31,7 @@ public class ReviewController {
     }
 
     @PutMapping("/review/{id}")
-    public ResponseEntity<ReviewDTO> editReview (@RequestBody @Valid DoReviewDTO r, @PathVariable long id, HttpServletRequest request){
+    public ResponseEntity<ReviewDTO> editReview (@RequestBody DoReviewDTO r, @PathVariable long id, HttpServletRequest request){
         return ResponseEntity.ok(reviewService.editReview(r, id,sessionManager.getLoggedUser(request).getId()));
     }
 

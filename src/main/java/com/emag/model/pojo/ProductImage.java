@@ -1,6 +1,7 @@
 package com.emag.model.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class ProductImage {
     private String url;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "product_id")
     private Product product;
 }

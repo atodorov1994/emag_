@@ -231,11 +231,7 @@ public class ProductService extends AbstractService{
             SubCategory subCategory = subCategoryRepository.findById(dto.getSubcategoryId())
                     .orElseThrow(() -> new BadRequestException("Subcategory not found!"));
         }
-        List<ResponseProductDTO> products = new ArrayList<>();
-        productDAO.filter(dto)
-                .forEach(id -> products.add(modelMapper.map(productRepository
-                        .findById(id)
-                        .orElseThrow(() -> new NotFoundException("Product not found!")) , ResponseProductDTO.class)));
-        return products;
+
+        return productDAO.filter(dto);
     }
 }

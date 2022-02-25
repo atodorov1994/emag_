@@ -19,15 +19,14 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-//    TODO make return DTOs
     @PostMapping("/cart/{productId}")
-    public ResponseEntity<UserCart> addProductToCart(@RequestBody  @PathVariable long productId , HttpServletRequest request){
+    public ResponseEntity<UserCart> addProductToCart(@PathVariable long productId , HttpServletRequest request){
         return ResponseEntity.ok(cartService.addProductToCart(productId , sessionManager.getLoggedUser(request)));
 
     }
 
     @DeleteMapping("/cart/{productId}")
-    public ResponseEntity<UserCart> removeProductFromCart(@RequestBody  @PathVariable long productId , HttpServletRequest request){
+    public ResponseEntity<UserCart> removeProductFromCart(@PathVariable long productId , HttpServletRequest request){
         return ResponseEntity.ok(cartService.removeProductFromCart(productId , sessionManager.getLoggedUser(request)));
     }
 

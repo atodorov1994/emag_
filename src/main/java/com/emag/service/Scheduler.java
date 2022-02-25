@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @EnableScheduling
 public class Scheduler extends AbstractService{
 
+    @Transactional
     @Scheduled(cron = "0 0/1 14-19 * * *")
     void checkExpiredDiscounts(){
         System.out.println("Discount deletion started");

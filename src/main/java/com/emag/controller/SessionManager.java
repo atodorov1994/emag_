@@ -15,7 +15,6 @@ public class SessionManager {
 
     private static final String LOGGED_USER_ID = "logged_user_id";
     private static final String LOGGED_USER_REMOTE_ADDRESS = "logged_user_remote_address";
-//    TODO save last URL when accesing getProductsBySubcategory or searchProductsByKeyword
     private static final String SUBCATEGORY_ID = "subcategory_id";
 
     @Autowired
