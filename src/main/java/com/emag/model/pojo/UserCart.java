@@ -1,5 +1,6 @@
 package com.emag.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,8 @@ public class UserCart {
     private UserCartKey primaryKey;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonIgnore
+//    @JsonManagedReference
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     User user;

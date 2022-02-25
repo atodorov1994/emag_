@@ -7,6 +7,7 @@ import com.emag.model.pojo.*;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.*;
 @Service
 public class OrderService extends AbstractService{
 
+    @Transactional
     public OrderDTO createOrder(User user) {
         List<UserCart> cart = cartRepository.findAllByUser(user).orElse(null);
         if (cart.isEmpty() || cart == null){
@@ -53,7 +55,14 @@ public class OrderService extends AbstractService{
             }
             cartRepository.delete(userCart);
         });
-        double totalSum = productsQuantities.keySet().stream().map(Product::getPrice).reduce(Double::sum).orElse(0.0);
+        double totalSum = productsQuantities.keySet().stream()
+                .map(product -> {
+            if (product.getDiscountedPrice() != null){
+                return product.getDiscountedPrice();
+            }
+            return product.getPrice();
+                })
+                .reduce(Double::sum).orElse(0.0);
         return new OrderDTO(new ArrayList<>(productsQuantities.entrySet()) , totalSum);
     }
 

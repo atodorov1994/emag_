@@ -91,7 +91,7 @@ public class ProductDAO {
         }
 
         try(Connection connection = jdbcTemplate.getDataSource().getConnection() ;
-             PreparedStatement statement = connection.prepareStatement(query.toString())){
+            PreparedStatement statement = connection.prepareStatement(query.toString())){
             int paramsCount = 0;
             if (!splitParams.isEmpty()) {
                 for (int i = 0; i < splitParams.size(); i++) {

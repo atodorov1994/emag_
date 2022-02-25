@@ -21,7 +21,6 @@ public class ImageUtil {
         if (!Arrays.asList(ACCEPTED_IMAGE_FORMATS).contains(extension)){
             throw new BadRequestException("Unsupported file format !");
         }
-        String name = System.nanoTime() + "." + extension;
-        return name;
+        return System.nanoTime() + "." + extension;
     }
 }
