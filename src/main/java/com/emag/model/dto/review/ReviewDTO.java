@@ -1,5 +1,6 @@
 package com.emag.model.dto.review;
 
+import com.emag.model.dto.user.UserWithoutPasswordDTO;
 import com.emag.model.pojo.Product;
 import com.emag.model.pojo.Review;
 import com.emag.model.pojo.User;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ReviewDTO {
     @JsonIgnore
     private long id;
-    private User reviewer;
+    private UserWithoutPasswordDTO reviewer;
     private List<User> usersLikedReview;
     private Product product;
     private String title;

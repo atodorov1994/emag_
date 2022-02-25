@@ -89,7 +89,7 @@ public class UserService extends AbstractService {
         String mobilePhone = dto.getMobilePhone();
         if (mobilePhone != null) {
             int l = mobilePhone.length();
-            if (userRepository.findByMobilePhoneContaining(mobilePhone.substring(l - 10, l - 1)).isPresent()){
+            if (userRepository.findByMobilePhoneContaining(mobilePhone.substring(l - 9, l - 1)).isPresent()){
                 throw new BadRequestException("Duplicated mobile phone!");
             }
             if (!UserUtility.isValidMobilePhone(mobilePhone)) {
@@ -163,6 +163,7 @@ public class UserService extends AbstractService {
 
     @SneakyThrows
     public String uploadImage(MultipartFile file, long id) {
+//        TODO interceptor for file size
         if (file.getBytes().length>MAX_SIZE_OF_IMAGE){
             throw new BadRequestException("Image is too large");
         }

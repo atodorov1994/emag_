@@ -85,13 +85,11 @@ public class UserController {
     }
 
 
-
     @PostMapping("/users/{id}/image")
-    public String uploadImage(@Valid @RequestPart @Max(10*1000000) MultipartFile file, BindingResult bindingResult, @PathVariable long id, HttpServletRequest request) {
-        if (bindingResult.hasErrors()){
-            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
+    public String uploadImage( @RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request ) {
+        if(!sessionManager.userHasPrivileges(request, id)){
+            throw new BadRequestException("No privileges!");
         }
-        sessionManager.userHasPrivileges(request, id);
         return userService.uploadImage(file,id);
     }
 

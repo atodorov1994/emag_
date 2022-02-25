@@ -14,7 +14,7 @@ import java.util.List;
 @EnableScheduling
 public class Scheduler extends AbstractService{
 
-    @Scheduled(cron = "0 0/1 20-22 * * *")
+    @Scheduled(cron = "0 0/1 14-19 * * *")
     void checkExpiredDiscounts(){
         System.out.println("Discount deletion started");
         List<Discount> discounts = discountRepository.findAll();
