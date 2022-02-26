@@ -228,7 +228,7 @@ public class ProductService extends AbstractService{
 
     public List<ResponseProductDTO> filterProducts(FilterProductsDTO dto) {
         if (dto.getSubcategoryId() != null) {
-            SubCategory subCategory = subCategoryRepository.findById(dto.getSubcategoryId())
+            subCategoryRepository.findById(dto.getSubcategoryId())
                     .orElseThrow(() -> new BadRequestException("Subcategory not found!"));
         }
 
