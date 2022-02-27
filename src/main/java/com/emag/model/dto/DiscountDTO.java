@@ -14,6 +14,5 @@ public class DiscountDTO {
     @Max(value = 95, message = "Discount percent must be between 1 and 95")
     private Integer discountPercent;
     @NotNull
-    private Timestamp startDate;
     private Timestamp expireDate;
 }

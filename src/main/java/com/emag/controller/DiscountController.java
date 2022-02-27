@@ -5,6 +5,7 @@ import com.emag.model.dto.DiscountDTO;
 import com.emag.model.pojo.Discount;
 import com.emag.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +24,11 @@ public class DiscountController {
     private DiscountService discountService;
 
     @PostMapping("/discounts/{id}")
-    public Discount addDiscount(@RequestBody @Valid DiscountDTO dto, HttpServletRequest request , @PathVariable long id ){
+    public ResponseEntity<Discount> addDiscount(@RequestBody @Valid DiscountDTO dto, HttpServletRequest request , @PathVariable long id ){
         if (!sessionManager.userHasPrivileges(request)){
             throw new UnauthorizedException("No permission!");
         }
-        return discountService.createDiscount(dto , id);
+        return ResponseEntity.ok(discountService.createDiscount(dto , id));
     }
 
 }

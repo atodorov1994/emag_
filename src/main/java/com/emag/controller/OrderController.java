@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @Transactional
     @PostMapping("/orders")
     OrderDTO createOrder (HttpServletRequest request) {
         return orderService.createOrder(sessionManager.getLoggedUser(request));

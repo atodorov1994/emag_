@@ -29,7 +29,8 @@ public class ProductDAO {
 
     @SneakyThrows
     public List<ResponseProductDTO> filter(FilterProductsDTO dto) {
-        StringBuilder query = new StringBuilder("SELECT p.id, p.name, p.brand, p.model, p.price, p.discounted_price, p.description, p.quantity, p.warranty_months, p.added_at, p.deleted_at, p.product_rating, \n" +
+        StringBuilder query = new StringBuilder("SELECT p.id, p.name, p.brand, p.model, p.price, p.discounted_price, " +
+                "p.description, p.quantity, p.warranty_months, p.added_at, p.deleted_at, p.product_rating, \n" +
                 "sc.id AS sub_category_id, sc.subcategory_name, c.id AS category_id, c.category_name, d.id AS discount_id, d.discount_percent, d.start_date, d.expire_date,\n" +
                 "pi.id AS product_image_id, pi.url\n" +
                 "FROM products AS p\n" +
@@ -148,11 +149,14 @@ public class ProductDAO {
                 product.setDeletedAt(result.getTimestamp("deleted_at"));
                 product.setProductRating(result.getDouble("product_rating"));
 
-                Discount discount = new Discount();
-                discount.setId(result.getLong("discount_id"));
-                discount.setDiscountPercent(result.getInt("discount_percent"));
-                discount.setStartDate(result.getTimestamp("start_date"));
-                discount.setExpireDate(result.getTimestamp("expire_date"));
+                if (result.getString("discount_id" ) != null) {
+                    Discount discount = new Discount();
+                    discount.setId(result.getLong("discount_id"));
+                    discount.setDiscountPercent(result.getInt("discount_percent"));
+                    discount.setStartDate(result.getTimestamp("start_date"));
+                    discount.setExpireDate(result.getTimestamp("expire_date"));
+                    product.setDiscount(discount);
+                }
 
                 ProductImage productImage = null;
                 if (result.getString("product_image_id") != null){
@@ -164,8 +168,10 @@ public class ProductDAO {
 
 
                 ResponseProductDTO responseProductDTO = modelMapper.map(product, ResponseProductDTO.class);
-                if(!foundProducts.stream().map(ResponseProductDTO::getId)
-                        .collect(Collectors.toList()).contains(responseProductDTO.getId())){
+                if(!foundProducts.stream()
+                        .map(ResponseProductDTO::getId)
+                        .collect(Collectors.toList())
+                        .contains(responseProductDTO.getId())){
                     if (productImage != null) {
                         responseProductDTO.setProductImages(new ArrayList<>());
                         responseProductDTO.getProductImages().add(productImage);

@@ -17,13 +17,18 @@ import java.util.List;
 public class DiscountService extends AbstractService{
 
     public Discount createDiscount(DiscountDTO dto , long id){
-        DiscountUtil.validateDiscountRequest(dto);
         int discountPercent = dto.getDiscountPercent();
-        Timestamp startDate = dto.getStartDate();
+        Timestamp startDate = Timestamp.valueOf(LocalDateTime.now());
         Timestamp expireDate = dto.getExpireDate();
+        DiscountUtil.validateDiscountRequest(discountPercent , startDate , expireDate);
 //        If requested discount equals discount from DB -> return discount from DB , else create new discount
         Discount discount = discountRepository.findDiscountByDiscountPercentAndStartDateAndExpireDate
-                (discountPercent, startDate , expireDate).orElse(modelMapper.map(dto , Discount.class));
+                (discountPercent, startDate , expireDate).orElse(
+                        new Discount().builder()
+                        .discountPercent(discountPercent)
+                        .startDate(startDate)
+                        .expireDate(expireDate)
+                        .build());
 //        Set discount and discounted price to product
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found!"));

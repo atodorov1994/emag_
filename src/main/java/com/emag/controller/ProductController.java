@@ -36,6 +36,7 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<ResponseProductDTO> addProduct(@Valid @RequestBody RequestProductDTO p, BindingResult bindingResult, HttpServletRequest request){
+//        TODO binding result
         if (bindingResult.hasErrors()){
             throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         }

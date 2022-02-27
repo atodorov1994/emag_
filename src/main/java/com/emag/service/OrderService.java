@@ -16,7 +16,6 @@ import java.util.*;
 @Service
 public class OrderService extends AbstractService{
 
-    @Transactional
     public OrderDTO createOrder(User user) {
         List<UserCart> cart = cartRepository.findAllByUser(user).orElse(null);
         if (cart.isEmpty() || cart == null){

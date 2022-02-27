@@ -60,6 +60,9 @@ public class CartService extends AbstractService{
 
     public List<ResponseProductDTO> getAllProductsFromCart(User user) {
         List<UserCart> userCarts = cartRepository.findAllByUser(user).orElseThrow(() -> new NotFoundException("Carts empty!"));
+        if (userCarts.isEmpty()){
+            throw new NotFoundException("Carts empty!");
+        }
         List<ResponseProductDTO> productDTO = new ArrayList<>();
         userCarts.forEach(userCart -> {
             ResponseProductDTO dto = modelMapper.map(userCart.getProduct() , ResponseProductDTO.class);

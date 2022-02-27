@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -33,6 +34,18 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
         dto.setTime(LocalDateTime.now());
         return dto;
     }
+
+    @ExceptionHandler(value = {HttpClientErrorException.MethodNotAllowed.class})
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseBody
+    public ErrorDTO handleMethodNotAllowed(Exception e){
+        ErrorDTO dto = new ErrorDTO();
+        dto.setMessage(e.getMessage());
+        dto.setStatus(HttpStatus.METHOD_NOT_ALLOWED.value());
+        dto.setTime(LocalDateTime.now());
+        return dto;
+    }
+
     @ExceptionHandler(value = {BadRequestException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody

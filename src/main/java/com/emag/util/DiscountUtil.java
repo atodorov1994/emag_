@@ -24,18 +24,9 @@ public class DiscountUtil {
                 "New discount", mailText));
     }
 
-    public static void validateDiscountRequest(DiscountDTO dto){
-        int discountPercent = dto.getDiscountPercent();
-        Timestamp startDate = dto.getStartDate();
-        Timestamp expireDate = dto.getExpireDate();
+    public static void validateDiscountRequest(int discountPercent , Timestamp startDate , Timestamp expireDate){
         if(discountPercent <= 0){
             throw new BadRequestException("Enter a valid discount percent");
-        }
-        if(startDate == null){
-            throw new BadRequestException("Start date is mandatory");
-        }
-        if (startDate.toLocalDateTime().isBefore(LocalDateTime.now())){
-            throw new BadRequestException("Invalid date time!");
         }
         if (expireDate != null) {
             if (expireDate.toLocalDateTime().isBefore(startDate.toLocalDateTime())) {
