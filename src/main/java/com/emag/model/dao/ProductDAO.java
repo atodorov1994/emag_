@@ -65,12 +65,12 @@ public class ProductDAO {
         }
         Double maxPrice = dto.getMaxPrice();
         if (maxPrice != null && maxPrice > 0){
-            query.append("IF(discounted_price IS NOT NULL, discounted_price, price) <= ? AND ");
+            query.append("IF(discounted_price = 0, price , discounted_price) <= ? AND ");
             queryParams.append(maxPrice.toString()).append(",");
         }
         Double minPrice = dto.getMinPrice();
         if (minPrice != null && minPrice >= 0){
-            query.append("IF(discounted_price IS NOT NULL, discounted_price, price) >= ? AND ");
+            query.append("IF(discounted_price = 0,price, discounted_price ) >= ? AND ");
             queryParams.append(minPrice.toString()).append(",");
         }
         Boolean discountedOnly = dto.getDiscountedOnly();

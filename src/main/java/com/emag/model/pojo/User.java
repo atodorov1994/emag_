@@ -32,8 +32,6 @@ public class User {
     private String password;
     private String email;
     private String mobilePhone;
-//    @Column(name = "is_admin" , nullable = false , columnDefinition = "INT")
-//    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isAdmin;
     private Timestamp createdAt;
     private String gender;

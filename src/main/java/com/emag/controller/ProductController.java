@@ -10,6 +10,8 @@ import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -111,8 +113,8 @@ public class ProductController {
 
 
     @GetMapping("/products/search/{keywordSequence}")
-    public List<ResponseProductDTO> searchProductsByKeyword(@PathVariable String keywordSequence){
-        return productService.searchProductsByKeyword(keywordSequence);
+    public ResponseEntity<Page<ResponseProductDTO>> searchProductsByKeyword(@PathVariable String keywordSequence , Pageable pageable){
+        return ResponseEntity.ok(productService.searchProductsByKeyword(pageable , keywordSequence));
     }
 
     @GetMapping("/products/fav")

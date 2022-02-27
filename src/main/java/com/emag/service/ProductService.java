@@ -13,6 +13,9 @@ import com.emag.model.pojo.User;
 import com.emag.util.ImageUtil;
 import com.emag.util.ProductUtil;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -150,8 +153,8 @@ public class ProductService extends AbstractService{
         return responseProductDTOS;
     }
 
-    public List<ResponseProductDTO> searchProductsByKeyword(String keywordSequence) {
-        HashSet<Product> foundProducts = new HashSet<>();
+    public Page<ResponseProductDTO> searchProductsByKeyword(Pageable pageable , String keywordSequence) {
+        List<Product> foundProducts = new ArrayList<>();
         String[] splitKeywords = keywordSequence.trim().split("\\s+");
         for (String keyword : splitKeywords) {
             foundProducts.addAll(
@@ -162,10 +165,10 @@ public class ProductService extends AbstractService{
         if (foundProducts.isEmpty()){
             throw new NotFoundException("No products found");
         }
-        List<ResponseProductDTO> foundProductsDTOs = new ArrayList<>();
-        foundProducts.forEach(product ->
-                foundProductsDTOs.add(modelMapper.map(product , ResponseProductDTO.class)));
-        return foundProductsDTOs;
+        int start = (int) pageable.getOffset();
+        int end = (Math.min((start + pageable.getPageSize()), foundProducts.size()));
+        Page<Product> productPage = new PageImpl<>(foundProducts.subList(start , end ) , pageable , foundProducts.size());
+        return productPage.map(product -> modelMapper.map(product , ResponseProductDTO.class));
     }
 
     public List<ResponseProductDTO> getAllFavouriteProducts(User user) {
