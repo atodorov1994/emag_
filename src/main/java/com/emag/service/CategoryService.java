@@ -20,7 +20,6 @@ public class CategoryService extends AbstractService {
         return categoryRepository.save(category);
     }
 
-
     public Category editCategory(EditCategoryDTO c) {
         String oldName = c.getOldName();
         String newName = c.getNewName();

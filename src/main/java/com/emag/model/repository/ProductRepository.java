@@ -15,7 +15,6 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getProductsBySubCategory(SubCategory subCategory);
     List<Product> findAllByDiscount(Discount discount);
-
     Collection<? extends Product> findByNameContainingOrDescriptionContaining (String keyword, String keyword1);
     List<Product> findAllBySubCategoryIdAndPriceIsBetween(long subCategoryId, double min, double max);
 

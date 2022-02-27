@@ -41,9 +41,6 @@ public class ProductService extends AbstractService{
         ProductUtil.validateInt(p.getQuantity());
         ProductUtil.validateInt(p.getWarrantyMonths());
         ProductUtil.validateDouble(p.getPrice());
-//        TODO not working with model mapper
-//        Product product = modelMapper.map(p , Product.class);
-//        product.setSubCategory(subCategory);
         Product product = new Product();
         product.setPrice(p.getPrice());
         product.setDescription(p.getDescription());

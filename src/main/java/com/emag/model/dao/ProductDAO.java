@@ -75,7 +75,7 @@ public class ProductDAO {
         }
         Boolean discountedOnly = dto.getDiscountedOnly();
         if (discountedOnly != null && discountedOnly){
-            query.append("discounted_price IS NOT NULL ");
+            query.append("discounts_id IS NOT NULL ");
         }
         //removes the last AND if it is not necessary
         if (query.substring(query.length() - 4).equals("AND ")){

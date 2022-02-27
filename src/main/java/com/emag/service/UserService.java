@@ -167,7 +167,6 @@ public class UserService extends AbstractService {
 
     @SneakyThrows
     public String uploadImage(MultipartFile file, long id) {
-        //        TODO interceptor for file size
         String name = ImageUtil.validateImageAndReturnName(file);
         File f = new File("user" + File.separator + "uploads" + File.separator + name);
         Files.copy(file.getInputStream() ,

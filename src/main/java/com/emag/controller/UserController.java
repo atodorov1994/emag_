@@ -58,7 +58,6 @@ public class UserController {
         return userService.findById(id);
     }
 
-
     @Transactional
     @PutMapping("/users/{id}")
     public UserWithoutPasswordDTO editUserData(@PathVariable long id, @RequestBody @Valid EditUserRequestDTO dto, HttpServletRequest request){
@@ -79,11 +78,10 @@ public class UserController {
 
     @Transactional
     @PutMapping("/users/forgotten-pass")
-    public UserWithoutPasswordDTO forgottenPassword (@RequestBody @Valid ForgottenPassDTO dto, HttpServletRequest request){
+    public ResponseEntity<UserWithoutPasswordDTO> forgottenPassword (@RequestBody @Valid ForgottenPassDTO dto, HttpServletRequest request){
         sessionManager.isLoggedVerification(request.getSession());
-        return userService.forgottenPassword (dto);
+        return ResponseEntity.ok(userService.forgottenPassword (dto));
     }
-
 
     @PostMapping("/users/{id}/image")
     public String uploadImage( @RequestPart MultipartFile file, @PathVariable long id, HttpServletRequest request ) {

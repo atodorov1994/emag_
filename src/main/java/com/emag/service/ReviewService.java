@@ -89,7 +89,7 @@ public class ReviewService extends AbstractService{
 
     public List<ReviewDTO> getReviewsByUser(long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with this id doesn't exist"));
-        List<Review> reviews = user.getReviews();
+        List<Review> reviews = reviewRepository.findAll();
         List<ReviewDTO> reviewDTOS = new ArrayList<>();
         reviews.forEach(review -> reviewDTOS.add(modelMapper.map(review, ReviewDTO.class)));
         return reviewDTOS;

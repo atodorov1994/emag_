@@ -12,6 +12,5 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     List<User> findAllBySubscribedIsTrue();
-    User findByPassword(String password);
     Optional<User> findByMobilePhoneContaining (String mobilePhone);
 }

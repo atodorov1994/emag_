@@ -67,8 +67,7 @@ public class User {
     private List<Review> reviews;
 
     @ManyToMany
-    //@JsonManagedReference
-    @JsonBackReference
+    @JsonManagedReference
     @JoinTable(
             name = "users_like_reviews",
             joinColumns = {@JoinColumn(name = "user_id")},

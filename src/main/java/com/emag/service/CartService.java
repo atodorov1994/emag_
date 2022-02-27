@@ -37,9 +37,7 @@ public class CartService extends AbstractService{
             }
         }
         return cartRepository.save(new UserCart(primaryKey , user , product , 1));
-
     }
-
 
     public UserCart removeProductFromCart(long productId, User user) {
         Product product = productRepository.findById(productId)
@@ -50,7 +48,6 @@ public class CartService extends AbstractService{
         UserCart userCart = cartRepository.findByPrimaryKey(primaryKey)
                 .orElseThrow(() -> new NotFoundException("Product was not added to cart!"));
         userCart.setQuantity(userCart.getQuantity() - 1);
-//        TODO recheck logic
         if (userCart.getQuantity() > 0) {
             return cartRepository.save(userCart);
         }

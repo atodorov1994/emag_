@@ -38,7 +38,6 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<ResponseProductDTO> addProduct(@Valid @RequestBody RequestProductDTO p, BindingResult bindingResult, HttpServletRequest request){
-//        TODO binding result
         if (bindingResult.hasErrors()){
             throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         }
@@ -96,21 +95,10 @@ public class ProductController {
         return productService.getProductsBetween (sessionManager.getSubcategoryId(request), min, max);
     }
 
-//    @GetMapping("/products/filter")
-//        public List<ResponseProductDTO> filterProducts (HttpSession session , @PathParam("priceMin") int min ,
-//                                                        @PathParam("priceMax") int max ,
-//                                                        @PathParam("brand") String brand ,
-//                                                        @PathParam("rating") double rating ,
-//                                                        @PathParam("likes") int likes){
-//        return productDAO.filter(min , max , brand ,rating , likes);
-//    }
-
     @PostMapping("/products/filter")
     public List<ResponseProductDTO> filterProducts (@RequestBody FilterProductsDTO dto){
         return productService.filterProducts(dto);
     }
-
-
 
     @GetMapping("/products/search/{keywordSequence}")
     public ResponseEntity<Page<ResponseProductDTO>> searchProductsByKeyword(@PathVariable String keywordSequence , Pageable pageable){
@@ -119,7 +107,6 @@ public class ProductController {
 
     @GetMapping("/products/fav")
     ResponseEntity<List<ResponseProductDTO>> getAllFavouriteProducts(HttpServletRequest request){
-//        TODO refactor
         if (!sessionManager.userHasPrivileges(request , sessionManager.getLoggedUser(request).getId())){
             throw new UnauthorizedException("No privileges!");
         }
