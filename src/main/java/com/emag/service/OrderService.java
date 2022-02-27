@@ -54,12 +54,14 @@ public class OrderService extends AbstractService{
             }
             cartRepository.delete(userCart);
         });
-        double totalSum = productsQuantities.keySet().stream()
-                .map(product -> {
-            if (product.getDiscountedPrice() != null){
-                return product.getDiscountedPrice();
-            }
-            return product.getPrice();
+        double totalSum = productsQuantities.entrySet().stream()
+                .map(productIntegerEntry -> {
+                    Product product = productIntegerEntry.getKey();
+                    int quantity = productIntegerEntry.getValue();
+                    if (product.getDiscountedPrice() != 0){
+                        return product.getDiscountedPrice()*quantity;
+                    }
+                    return product.getPrice()*quantity;
                 })
                 .reduce(Double::sum).orElse(0.0);
         return new OrderDTO(new ArrayList<>(productsQuantities.entrySet()) , totalSum);
