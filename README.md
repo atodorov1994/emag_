@@ -1,6 +1,6 @@
 # emag_
 
-ITTalents Season 13 – final project ’Emag’ ,replica of emag.bg:
+ITTalents Season 13 â€“ final project â€™Emagâ€™ ,replica of emag.bg:
 A simple web application , based on Spring.
 
 Technologies used:
@@ -9,3 +9,8 @@ Spring Framework;
 Spring Boot + Tomcat Servlet Container
 Spring Data : JPA + Hibernate ; JdbcTemplate;
 Spring MVC: RESTful Webservice
+Lombok
+ModelMapper
+Bean Validation API 
+Passay - for generating random password
+IntelliJ Maven, MySQL, Postman, Git
