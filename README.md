@@ -1,3 +1,11 @@
 # emag_
 
-This is educational simulation of emag.bg.
+ITTalents Season 13 – final project ’Emag’ ,replica of emag.bg:
+A simple web application , based on Spring.
+
+Technologies used:
+Java 11 ,
+Spring Framework;
+Spring Boot + Tomcat Servlet Container
+Spring Data : JPA + Hibernate ; JdbcTemplate;
+Spring MVC: RESTful Webservice

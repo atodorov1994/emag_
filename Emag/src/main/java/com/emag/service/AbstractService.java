@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public abstract class AbstractService {
 
-    protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "reviews" , "added_desc" };
+    protected static final String[] SORTED_BY = {"price_asc" , "price_desc" ,  "rating" , "added_desc" };
 
     protected static final String[] GENDER = {"male", "female", "gay", "shemale", "transgender","m","f","g","t"};
 

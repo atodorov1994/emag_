@@ -16,7 +16,7 @@ import java.util.List;
 public class Scheduler extends AbstractService{
 
     @Transactional
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedDelay = 10*1000)
     void checkExpiredDiscounts(){
         System.out.println("Discount deletion started");
         List<Discount> discounts = discountRepository.findAll();
@@ -24,7 +24,7 @@ public class Scheduler extends AbstractService{
             if (d.getExpireDate().toLocalDateTime().isBefore(LocalDateTime.now())){
                 List<Product> products = productRepository.findAllByDiscount(d);
                 products.forEach(p -> {
-                    p.setDiscountedPrice(null);
+                    p.setDiscountedPrice(0.0);
                     p.setDiscount(null);
                     productRepository.save(p);
                 } );

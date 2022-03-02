@@ -149,7 +149,6 @@ public class ProductService extends AbstractService{
                 responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
         return responseProductDTOS;
     }
-
     public Page<ResponseProductDTO> searchProductsByKeyword(Pageable pageable , String keywordSequence) {
         List<Product> foundProducts = new ArrayList<>();
         String[] splitKeywords = keywordSequence.trim().split("\\s+");
