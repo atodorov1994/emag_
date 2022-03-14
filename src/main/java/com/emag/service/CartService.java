@@ -8,9 +8,7 @@ import com.emag.model.pojo.User;
 import com.emag.model.pojo.UserCart;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CartService extends AbstractService{

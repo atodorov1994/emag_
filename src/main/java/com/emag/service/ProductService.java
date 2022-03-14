@@ -14,10 +14,7 @@ import com.emag.util.ImageUtil;
 import com.emag.util.ProductUtil;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
-<<<<<<< HEAD:src/main/java/com/emag/service/ProductService.java
-=======
 import org.springframework.data.domain.PageImpl;
->>>>>>> 7455794e361dcb1877caa80b4a61ca41c203af6e:Emag/src/main/java/com/emag/service/ProductService.java
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -143,18 +140,16 @@ public class ProductService extends AbstractService{
         return modelMapper.map(user , LikedProductsForUserDTO.class);
     }
 
-    public Page<ResponseProductDTO> getProductsBySubcategory(Pageable page, long id) {
+    public List<ResponseProductDTO> getProductsBySubcategory(long id) {
         SubCategory subCategory = subCategoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Subcategory not found!"));
-
-        Page<Product> products = productRepository.getPageOfProductsBySubCategory(page, subCategory);
-        if(products.isEmpty()){
-            throw new BadRequestException("No products found for this subcategory");
-        }
-
-        return products
-                .map(product -> modelMapper.map(product, ResponseProductDTO.class));
+        List<Product> products = productRepository.getProductsBySubCategory(subCategory);
+        List<ResponseProductDTO> responseProductDTOS = new ArrayList<>();
+        products.forEach(product ->
+                responseProductDTOS.add(modelMapper.map(product, ResponseProductDTO.class)));
+        return responseProductDTOS;
     }
+
     public Page<ResponseProductDTO> searchProductsByKeyword(Pageable pageable , String keywordSequence) {
         List<Product> foundProducts = new ArrayList<>();
         String[] splitKeywords = keywordSequence.trim().split("\\s+");
@@ -188,7 +183,7 @@ public class ProductService extends AbstractService{
             throw new BadRequestException("Invalid sorting type");
         }
 
-        List<Product> products = productRepository.getPageOfProductsBySubCategory(subCategory);
+        List<Product> products = productRepository.getProductsBySubCategory(subCategory);
         ArrayList<ResponseProductDTO> productDTO = new ArrayList<>();
         products.forEach(product -> productDTO.add(modelMapper.map(product , ResponseProductDTO.class)));
         productDTO.sort(Comparator.comparingDouble(ResponseProductDTO::getPrice));

@@ -83,7 +83,7 @@ public class ProductDAO {
         }
         Boolean orderByPrice = dto.getOrderByPrice();
         if (orderByPrice != null && orderByPrice){
-            query.append("ORDER BY IF(discounts_id IS NOT NULL, discounted_price, price) ");
+            query.append("ORDER BY IF(discounted_price IS NOT NULL, discounted_price, price) ");
             Boolean sortDesc = dto.getSortDesc();
             if (sortDesc != null && sortDesc){
                 query.append("DESC ");

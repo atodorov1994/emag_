@@ -16,11 +16,7 @@ import java.util.List;
 public class Scheduler extends AbstractService{
 
     @Transactional
-<<<<<<< HEAD:src/main/java/com/emag/service/Scheduler.java
-    @Scheduled(fixedDelay = 1000)
-=======
-    @Scheduled(fixedDelay = 10*1000)
->>>>>>> 7455794e361dcb1877caa80b4a61ca41c203af6e:Emag/src/main/java/com/emag/service/Scheduler.java
+    @Scheduled(cron = "0 0 0 * * *")
     void checkExpiredDiscounts(){
         System.out.println("Discount deletion started");
         List<Discount> discounts = discountRepository.findAll();
@@ -28,7 +24,7 @@ public class Scheduler extends AbstractService{
             if (d.getExpireDate().toLocalDateTime().isBefore(LocalDateTime.now())){
                 List<Product> products = productRepository.findAllByDiscount(d);
                 products.forEach(p -> {
-                    p.setDiscountedPrice(0.0);
+                    p.setDiscountedPrice(null);
                     p.setDiscount(null);
                     productRepository.save(p);
                 } );

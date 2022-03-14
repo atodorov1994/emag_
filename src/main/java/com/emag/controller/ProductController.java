@@ -79,9 +79,9 @@ public class ProductController {
     }
 
     @GetMapping("/subcategories/{id}/products")
-    public Page<ResponseProductDTO> getProductsBySubcategory(Pageable page, @PathVariable long id , HttpSession session){
+    public List<ResponseProductDTO> getProductsBySubcategory(@PathVariable long id , HttpSession session){
         sessionManager.setSubcategoryId(session , id);
-        return productService.getProductsBySubcategory(page, id);
+        return productService.getProductsBySubcategory(id);
     }
 
     @GetMapping("/subcategories/products/{sortedBy}")
