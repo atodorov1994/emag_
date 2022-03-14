@@ -10,6 +10,8 @@ import com.emag.model.dto.product.ResponseProductDTO;
 import com.emag.model.pojo.Product;
 import com.emag.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -77,9 +79,9 @@ public class ProductController {
     }
 
     @GetMapping("/subcategories/{id}/products")
-    public List<ResponseProductDTO> getProductsBySubcategory(@PathVariable long id , HttpSession session){
+    public Page<ResponseProductDTO> getProductsBySubcategory(Pageable page, @PathVariable long id , HttpSession session){
         sessionManager.setSubcategoryId(session , id);
-        return productService.getProductsBySubcategory(id);
+        return productService.getProductsBySubcategory(page, id);
     }
 
     @GetMapping("/subcategories/products/{sortedBy}")
